@@ -439,3 +439,88 @@ app.post("/updateuser/:id", (req, res) => {
     }
   });
 });
+app.post("/updatestation/:id", (req, res) => {
+  
+  let qry24 =
+    "update tbl_chargingstation set station_name='" +
+    req.body.station_name +
+    "',station_contact='" +
+    req.body.station_contact +
+    "',station_email='" +
+    req.body.station_email +
+    "',station_adress='" +
+    req.body.station_adress +
+    "' where station_id=" +
+    req.params.id;
+
+    console.log(qry24);
+    
+  db.query(qry24, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      
+      res.send({
+        message: "Data saved",
+      });
+    }
+  });
+});
+app.get("/passwordstation/:id",(req,res)=>{
+  let qry25="select station_password from tbl_chargingstation where station_id="+req.params.id;
+  db.query(qry25, (err, result) => {
+    
+    if (err) {
+      console.log("Error");
+    } else {
+      
+      res.send({
+        
+        station1:result
+      });
+    }
+  });
+});
+app.post("/updatepassword/:id",(req,res)=>{
+  let qry26="update tbl_chargingstation set station_password='"+req.body.password+"'where station_id="+req.params.id
+  db.query(qry26, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      
+      res.send({
+        message: "Data saved",
+      });
+    }
+  });
+})
+
+app.get("/passworduser/:id",(req,res)=>{
+  let qry25="select owner_password from tbl_owner where owner_id="+req.params.id;
+  db.query(qry25, (err, result) => {
+    
+    if (err) {
+      console.log("Error");
+    } else {
+      
+      res.send({
+        
+        User:result
+      });
+    }
+  });
+});
+app.post("/updateuserpassword/:id",(req,res)=>{
+  let qry26="update tbl_owner set owner_password='"+req.body.password+"'where owner_id="+req.params.id
+  db.query(qry26, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      
+      res.send({
+        message: "Data saved",
+      });
+    }
+  });
+})
+

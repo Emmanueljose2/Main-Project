@@ -24,12 +24,18 @@ export const Myprofile = () => {
   const [id, setId] = useState(sessionStorage.getItem("uid"));
   const [userdata, setUserData] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [open1, setAll] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpen1 = () => setAll(true);
+  const handleClose1 = () => setAll(false);
   const [name, setName] = useState("");
   const [contact,setContact]=useState("")
   const [Email,setEmail]=useState("")
   const [Adress,setAdress]=useState("")
+  const [CurrentPassword, setCurrentpassword] = useState("");
+  const [NewPassword,setNewpassword]=useState("")
+  const [RetypePassword,setRetypepassword]=useState("")
 
   useEffect(() => {
     
@@ -56,6 +62,30 @@ export const Myprofile = () => {
     // console.log(dat);
     axios.post(`http://localhost:4000/updateuser/${id}`, dat);
     
+  };
+  const Password = (e) => {
+    axios
+      .get(`http://localhost:4000/passworduser/${id}`)
+      .then((response) => response.data)
+      .then((data) => {
+        let OldPassword = data.User[0].owner_password;
+        console.log(OldPassword);
+        if (CurrentPassword == OldPassword) {
+          if(NewPassword==RetypePassword){
+           var data = {
+              password:NewPassword
+            }
+            axios.post(`http://localhost:4000/updateuserpassword/${id}`, data);
+          }
+          else {
+            alert("Password Missmatch")
+          }
+        }
+        else
+        {
+          alert("Incorrect Password")
+        }
+      });
   };
   return (
     <Grid container spacing={1} className="Icon">
@@ -171,7 +201,65 @@ export const Myprofile = () => {
         </Modal>
       </Grid>
       <Grid xs={6}>
-        <button className="button1 btn">Change Password</button>
+        <button className="button1 btn" onClick={handleOpen1}>Change Password</button>
+        <Modal
+          open={open1}
+          onClose={handleClose1}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Password Change
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              <form class="form1">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Current Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Current Password"
+                    onChange={(e) => {
+                      setCurrentpassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1"> New Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder=" New Password"
+                    onChange={(e) => {
+                      setNewpassword(e.target.value);
+                    }}
+                  />
+                  <label for="exampleInputPassword1"> Retype Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    placeholder="Retype Password"
+                    onChange={(e) => {
+                      setRetypepassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  onClick={Password}
+                >
+                  Submit
+                </button>
+              </form>
+            </Typography>
+          </Box>
+        </Modal>
       </Grid>
     </Grid>
   );

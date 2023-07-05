@@ -102,8 +102,7 @@ export default function Place() {
                     {d.district_name}
                   </option>
                 ))}
-                {/* 
-                <option value="Ernakulam">Ernakulam</option> */}
+                
               </select>
               <label>Place</label>
               <input

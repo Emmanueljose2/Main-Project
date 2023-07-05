@@ -15,7 +15,7 @@ export const navlist = [
   },
   {
     text: "blog",
-    path: "/blog",
+    path: "/User/blog",
   },
   {
     text: "contact us",
