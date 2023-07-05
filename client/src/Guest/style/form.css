@@ -1,0 +1,55 @@
+.Name {
+    
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+}
+.Name input{
+    border-radius: 10px;
+    width: 50%;
+}
+.button1 button{
+    color: green;
+    background:  gold;
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    height: 50px;
+}
+button:hover{
+    color: gray;
+}
+.center {
+    grid: 5px;
+}
+.col{
+    width: 50%;
+    color: cadetblue;
+}
+.form1 {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    margin-right: 25px;
+    padding: 30px;
+    border: 2px solid rgb(61, 51, 160);
+    border-radius: 10px;
+}
+.style {
+    color: grey;
+}
+.font{
+    display:flex;
+    justify-content: space-around;
+}
+.form2 {
+    width: 35%;
+    align-items: center;
+    border: 2px solid rgb(61, 51, 160);
+    border-radius: 10px;
+    margin-top: 35px;
+    padding: 30px;
+    margin-left: 25%;
+    margin-bottom: 35px;
+    
+    
+}
