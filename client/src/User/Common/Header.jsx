@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from '../components/assets/images/logo.svg'
+import logo from '../components/assets/images/logo.jpg'
 import '../style/main.scss'
 import { BsBagCheck } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
@@ -36,14 +36,14 @@ export const Header = () => {
             </ul>
         </div>
     </nav>
-    <div className="right">
+    {/* <div className="right">
         <div className="right_search">
             <input type="text" placeholder="search products"/>
             <BiSearch className='searchIcon heIcon'/>
         </div>
        
         
-    </div>
+    </div> */}
 </div>
 </header>
   )

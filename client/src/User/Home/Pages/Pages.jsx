@@ -1,21 +1,29 @@
-import React from 'react'
-import { BrowserRouter  as  Router,Switch,Route,Link, Routes} from "react-router-dom";
-import { Header } from '../../Common/Header';
-import { Footer } from '../../Common/Footer';
-import { Home } from '../Home';
-import {Myprofile} from '../../components/Myprofile'
-import Search from '../../components/Search';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Routes,
+} from "react-router-dom";
+import { Header } from "../../Common/Header";
+import { Footer } from "../../Common/Footer";
+import { Home } from "../Home";
+import { Myprofile } from "../../components/Myprofile";
+import Search from "../../components/Search";
 export const Pages = () => {
   return (
     <>
-        <Header/>
-
+      <Header />
+        <div style={{height:"380px"}}>
         <Routes>
-      <Route path="/*" element={<Home />} />
-      <Route path="/Myprofile" element={<Myprofile />} />
-      <Route path="/Blog" element={<Search />} />
-    </Routes>
-       <Footer/>
+        <Route path="/*" element={<Search />} />
+        <Route path="/Home" element={<Search />} />
+        <Route path="/Myprofile" element={<Myprofile />} />
+        <Route path="/Blog" element={<Search />} />
+      </Routes>
+        </div>
+      <Footer />
     </>
-  )
-}
+  );
+};

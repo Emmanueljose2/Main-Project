@@ -15,8 +15,8 @@ export default function Router() {
   return (
     <Routes>
       <Route path='/*' element={<Home/>}/>
-      <Route path='/about' element={<Registration/>}/>
-      <Route path='/cars' element={<StationRegistor/>}/>
+      <Route path='/owner' element={<Registration/>}/>
+      <Route path='/station' element={<StationRegistor/>}/>
       <Route path='/cars/:slug' element={<CarDetails/>}/>
       <Route path='/blogs' element={<Login/>}/>
       <Route path='/blogs/:slug' element={<BlogDetails/>}/>

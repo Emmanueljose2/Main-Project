@@ -15,16 +15,14 @@ export const Hero = () => {
     <section className='hero'>
     <div className='container'><h1>
         <label>
-            Over<span>65,00</span>Curated Design
+            Over<span>650</span>Charging Stations
         </label>
         <br/>
-        <label>
-            Resourses,<span>Graphic &website</span>Templates
-        </label>
+        
         </h1>
-        <p>High-quality Design Themes for persool</p>
+        <p>User friendly charging stations</p>
         <div className="search">
-            <span>All Categories</span>
+            
             <hr/>
             <input type="text" placeholder='Search Stations' onChange={onChange} value={value}/>
             <button onClick={()=>onSearch(value)}>

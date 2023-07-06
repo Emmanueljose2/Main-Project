@@ -15,22 +15,13 @@ export const Hero = () => {
     <section className='hero'>
     <div className='container'><h1>
         <label>
-            Over<span>65,00</span>Curated Design
+            Over<span>650</span> stations
         </label>
         <br/>
-        <label>
-            Resourses,<span>Graphic &website</span>Templates
-        </label>
+        
         </h1>
-        <p>High-quality Design Themes for persool</p>
-        <div className="search">
-            <span>All Categories</span>
-            <hr/>
-            <input type="text" placeholder='Search Stations' onChange={onChange} value={value}/>
-            <button onClick={()=>onSearch(value)}>
-                <BiSearch className='searchIcon heIcon'/>
-            </button>
-        </div>
+        <p>Most trusted website</p>
+        
         {/* <SearcgItems product={products} value={value} onSearch={onSearch} /> */}
         </div>
         </section>

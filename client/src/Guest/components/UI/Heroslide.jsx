@@ -20,33 +20,27 @@ const Heroslide = () => {
         <div className="slider_item slider_item-01 mt0">
             <Container>
                 <div className="slider_content">
-                    <h4 className="text-light mb-3">For Rent $70 Per Day</h4>
-                    <h1 className="text-light mb-4">Reserve Now and Get 50%</h1>
-                    <button className="btn reserve_btn mt-4">
-                        <Link to='/cars'>Reserve Now</Link>
-                    </button>
+                    <h4 className="text-light mb-3"> $2 for a charge</h4>
+                    <h1 className="text-light mb-4">Reserve Now </h1>
+                    
                 </div>
             </Container>
             </div>
             <div className="slider_item slider_item-02 mt0">
             <Container>
                 <div className="slider_content">
-                    <h6 className="text-light mb-3">For Rent $70 Per Day</h6>
-                    <h1 className="text-light mb-4">Reserve Now and Get 50%</h1>
-                    <button className="btn reserve_btn mt-4">
-                        <Link to='/cars'>Reserve Now</Link>
-                    </button>
+                <h4 className="text-light mb-3"> $2 for a charge</h4>
+                    <h1 className="text-light mb-4">Reserve Now </h1>
+                    
                 </div>
             </Container>
             </div>  
             <div className="slider_item slider_item-03 mt0">
             <Container>
                 <div className="slider_content">
-                    <h4 className="text-light mb-3">For Rent $70 Per Day</h4>
-                    <h1 className="text-light mb-4">Reserve Now and Get 50%</h1>
-                    <button className="btn reserve_btn mt-4">
-                        <Link to='/cars'>Reserve Now</Link>
-                    </button>
+                <h4 className="text-light mb-3"> $2 for a charge</h4>
+                    <h1 className="text-light mb-4">Reserve Now </h1>
+                    
                 </div>
             </Container>
             </div>

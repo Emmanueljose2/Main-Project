@@ -8,17 +8,14 @@ const navLink = [
     display: "Home",
   },
   {
-    path: "/about",
-    display: "About",
+    path: "/owner",
+    display: "Owner Signup",
   },
   {
-    path: "/cars",
-    display: "Car",
+    path: "/station",
+    display: "Station Signup",
   },
-  {
-    path: "/blogs",
-    display: "Blog",
-  },
+  
   {
     path: "/contact",
     display: "Contact",
@@ -34,19 +31,14 @@ export default function Header() {
           <Row className="w-100">
             <Col lg="6" sm="6" md="6">
               <div className="header_top_left ">
-                <span>Need Help?</span>
-                <span className="header_top_help">
-                  <i className="ri-phone-fill"></i> +1-202-555-0149
-                </span>
+                
+                
               </div>
             </Col>
             <Col lg="6" sm="6" md="6">
               <div className="header_top_right d-flex align-items-center justify-content-end gap-3">
-                <Link to="#" className="d-flex align-items-center gap-1">
+                <Link to="/blogs" className="d-flex align-items-center gap-1">
                   <i className="ri-login-circle-line"></i> Login
-                </Link>
-                <Link to="#">
-                  <i className="ri-user-line"></i> Login
                 </Link>
               </div>
             </Col>
@@ -61,10 +53,9 @@ export default function Header() {
               <div className="logo">
                 <h1>
                   <Link to="/home" className="d-flex align-items-center gap-1">
-                    <i class="ri-car-line"></i>
+                    <i class="ri-charging-pile-fill"></i>
                     <span>
-                      Rent Car <br />
-                      Service
+                     Power Bank
                     </span>
                   </Link>
                 </h1>
@@ -76,8 +67,8 @@ export default function Header() {
                   <i class="ri-earth-line"></i>
                 </span>
                 <div className="header_location_content">
-                  <h4>Bangladesh</h4>
-                  <h6>Sylhet City,Bangladesh</h6>
+                  <h4>Kearla</h4>
+                  <h6>Muvattupuzha</h6>
                 </div>
               </div>
             </Col>
@@ -87,17 +78,13 @@ export default function Header() {
                   <i class="ri-time-line"></i>
                 </span>
                 <div className="header_location_content">
-                  <h4>Sunday to Friday</h4>
-                  <h6>10 am - 7pm</h6>
+                  <h4>24X7</h4>
+                  
                 </div>
               </div>
             </Col>
             <Col lg="2" md="3" sm="0" className="d-flex align-items-center justify-content-end">
-              <button className="header_btn btn d-flex align-items-center justify-content-end ">
-                <Link to="/contact">
-                  <i class="ri-phone-line"></i>Request a call
-                </Link>
-              </button>
+              
             </Col>
           </Row>
         </Container>

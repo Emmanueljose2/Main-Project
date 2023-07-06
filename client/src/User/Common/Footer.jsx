@@ -2,8 +2,8 @@ import React from 'react'
 
 export const Footer = () => {
   return (
-    <footer>
-    <p>Copyright © GOSTO all rights reserved. Powered by GORKCODER.</p>
+    <footer >
+    <p>Copyright © PowerBank all rights reserved. Powered by ej.</p>
   </footer>
   )
 }

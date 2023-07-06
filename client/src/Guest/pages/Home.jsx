@@ -16,28 +16,12 @@ const Home = () => {
       <div className="hero_form">
         
       <div className="hero__row">
-          <Container>
-          <Row className="form_row">
-         
-            <Col lg='4' md='4'>
-              <div className="find__cars-left">
-                <h2>
-                  
-                  Find your best  car here
-                </h2>
-              </div>
-            </Col>
-            <Col lg='8' md='8' sm='12'>
-              <FindcarForm/>
-            </Col>
           
-        </Row>
-        </Container>
         </div>
       </div>
     </section>
     {/*about session */}
-    <AboutSession/>
+    
     {/*service section */}
     <section>
       <Container>

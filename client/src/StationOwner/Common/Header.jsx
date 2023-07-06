@@ -36,14 +36,7 @@ export const Header = () => {
             </ul>
         </div>
     </nav>
-    <div className="right">
-        <div className="right_search">
-            <input type="text" placeholder="search products"/>
-            <BiSearch className='searchIcon heIcon'/>
-        </div>
-       
-        
-    </div>
+    
 </div>
 </header>
   )

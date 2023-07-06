@@ -4,20 +4,12 @@ import { Link } from "react-router-dom";
 import "../../style/footer.css"
 const quikLink= [
   {
-    path:'/about',
-    display:'About'
+    path: "/owner",
+    display: "Owner Signup",
   },
   {
-    path:'#',
-    display:'Privacy Policy'
-  },
-  {
-    path:'/cars',
-    display:'Car Listing'
-  },
-  {
-    path:'/contract',
-    display:'Contract'
+    path: "/station",
+    display: "Station Signup",
   }
 ]
 export default function Footer() {
@@ -31,10 +23,9 @@ export default function Footer() {
             <div className="logo footer_logo">
               <h1>
                 <Link to="/home" className="d-flex align-items-center gap-1">
-                  <i class="ri-car-line"></i>
+                  <i class="ri-charging-pile-fill"></i>
                   <span>
-                    Rent Car <br />
-                    Service
+                    Power Bank
                   </span>
                 </Link>
               </h1>

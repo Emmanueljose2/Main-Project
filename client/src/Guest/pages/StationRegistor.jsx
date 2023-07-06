@@ -73,10 +73,11 @@ const Registration = () => {
     <Row>
       <Col></Col>
       <Col>
+        
+        <Form className="form1">
         <div className="font">
           <h5>Station Registration</h5>
         </div>
-        <Form className="form">
           <FormGroup className="Name">
             <Label sm={2} for="firstname" className="style">
               Name

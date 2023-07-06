@@ -10,17 +10,10 @@ export const navlist = [
     path: "/StationOwner/Myprofile",
   },
   {
-    text: "about us",
-    path: "/about",
+    text: "Logout",
+    path: "/Logout",
   },
-  {
-    text: "blog",
-    path: "/blog",
-  },
-  {
-    text: "contact us",
-    path: "/contact",
-  },
+  
 ]
 export const hero = [
   {

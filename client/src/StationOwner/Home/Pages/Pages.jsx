@@ -11,6 +11,7 @@ export const Pages = () => {
 
         <Routes>
       <Route path="/*" element={<Home />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/Myprofile" element={<Myprofile />} />
     </Routes>
        <Footer/>
