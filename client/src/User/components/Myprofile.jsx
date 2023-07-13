@@ -88,7 +88,7 @@ export const Myprofile = () => {
       });
   };
   return (
-    <Grid container spacing={1} className="Icon">
+    <Grid container spacing={1} className="Icons">
       <Grid xs={9}>
         <img className="size" src={userdata.owner_photo} alt="" />
       </Grid>

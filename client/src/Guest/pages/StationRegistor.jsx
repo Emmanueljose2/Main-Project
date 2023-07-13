@@ -185,6 +185,7 @@ const Registration = () => {
               Place
             </Label>
             <select
+            className="reg-sel"
               name="Place"
               id="Place"
               onChange={(e) => {

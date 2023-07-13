@@ -200,6 +200,7 @@ app.get("/ajaxplace/:id", (req, res) => {
 app.get("/ajaxlocation/:id", (req, res) => {
   let qry17 = "select * from tbl_location where place_id=" + req.params.id;
   db.query(qry17, (err, result) => {
+    
     if (err) {
       console.log("Error");
     } else if (result.length > 0) {
@@ -519,6 +520,20 @@ app.post("/updateuserpassword/:id",(req,res)=>{
       
       res.send({
         message: "Data saved",
+      });
+    }
+  });
+})
+app.get("/stationdata/:id",(req,res)=>{
+  let qry25="select * from tbl_chargingstation where location_id="+req.params.id
+  db.query(qry25, (err, result) => {
+      
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({
+       Station:result
+       
       });
     }
   });

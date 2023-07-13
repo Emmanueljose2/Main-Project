@@ -15,7 +15,9 @@ export const Pages = () => {
   return (
     <>
       <Header />
-        <div style={{height:"380px"}}>
+        <div style={{height:"380px",display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around"}}>
         <Routes>
         <Route path="/*" element={<Search />} />
         <Route path="/Home" element={<Search />} />
