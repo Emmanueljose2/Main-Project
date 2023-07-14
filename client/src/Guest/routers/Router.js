@@ -18,7 +18,7 @@ export default function Router() {
       <Route path='/owner' element={<Registration/>}/>
       <Route path='/station' element={<StationRegistor/>}/>
       <Route path='/cars/:slug' element={<CarDetails/>}/>
-      <Route path='/blogs' element={<Login/>}/>
+      <Route path='/login' element={<Login/>}/>
       <Route path='/blogs/:slug' element={<BlogDetails/>}/>
       <Route path='*' element={<NotFound/>}/>
     </Routes>

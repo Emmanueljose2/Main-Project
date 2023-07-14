@@ -4,18 +4,16 @@ import { useState, useEffect } from "react";
 import "./style.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-// Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-// Bootstrap Bundle JS
-import "bootstrap/dist/js/bootstrap.bundle.min";
+import { Link } from "react-router-dom";
 
-const Search = () => {
+export default function Search() {
   const [district, setDistrict] = useState("");
   const [districtData, setDistrictData] = useState([]);
   const [placeData, setPlaceData] = useState([]);
   const [location, setLocationData] = useState([]);
   const [stationData, setStationData] = useState([]);
   const [locationData, Location] = useState([]);
+
   const getData = () => {
     axios
       .get("http://localhost:4000/district")
@@ -24,6 +22,7 @@ const Search = () => {
         setDistrictData(data.district);
       });
   };
+
   const getPlaceData = (e) => {
     axios
       .get(`http://localhost:4000/ajaxplace/${e}`)
@@ -32,6 +31,7 @@ const Search = () => {
         setPlaceData(data.place);
       });
   };
+
   const getLocationData = (e) => {
     axios
       .get(`http://localhost:4000/ajaxlocation/${e}`)
@@ -49,20 +49,20 @@ const Search = () => {
         console.log(data.Station);
       });
   };
-  // const getStation = () => {
-  //   stationData.map
-  // }
 
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div>
       <div className="search-main">
-        <div>
+        <table>
+          <tr>
+        <td style={{padding: "20px"}}><div>
           <label>District</label>
-        </div>
-        <div>
+        </div></td>
+       <td style={{padding: "20px"}}><div>
           <select
             name="district"
             id="district"
@@ -77,11 +77,11 @@ const Search = () => {
               </option>
             ))}
           </select>
-        </div>
-        <div>
+        </div></td>
+        <td style={{padding: "20px"}}><div>
           <label>Place</label>
-        </div>
-        <div>
+        </div></td>
+       <td style={{padding: "20px"}}><div>
           <select
             name="place"
             id="place"
@@ -97,11 +97,11 @@ const Search = () => {
               </option>
             ))}
           </select>
-        </div>
-        <div>
+        </div></td>
+        <td style={{padding: "20px"}}><div>
           <label>Location</label>
-        </div>
-        <div>
+        </div></td>
+       <td style={{padding: "20px"}}> <div>
           <select
             name="place"
             id="place"
@@ -117,32 +117,27 @@ const Search = () => {
               </option>
             ))}
           </select>
-        </div>
+        </div></td>
         <div>
           {/* <button class="btn style2" onChange={() => {
            // getStation();
           }}>Search</button> */}
         </div>
+        </tr>
+        </table>
       </div>
-
       <div className="cad1">
-        {stationData.map((d, key) => (
-          <Card style={{ width: "18rem" }}>
-            <Card.Img variant="top"   src={d.station_photo} />
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-              <Button variant="primary">Go somewhere</Button>
-            </Card.Body>
-          </Card>
-        ))}
-      </div>
+          {stationData.map((d, key) => (
+            <Card style={{ width: "18rem" }}>
+              <Card.Img variant="top"   src={d.station_photo} />
+              <Card.Body>
+                <Card.Title>{d.station_name}</Card.Title>
+                <Link to="/Stations">
+                <Button variant="primary">View more</Button></Link>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
     </div>
   );
-};
-
-
-export default Search();
+}
