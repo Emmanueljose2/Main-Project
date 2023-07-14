@@ -2,6 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./style.css";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+
 
 const Search = () => {
   const [district, setDistrict] = useState("");
@@ -122,10 +125,18 @@ const Search = () => {
       <div className="cad1">
         
         {stationData.map((d,key)=>(
-<div className="cad">
-      <img key={key} src={d.station_photo} className="size" alt=""/> 
-      <label key={key}>Name {d.station_name}</label>  
-      </div>    ))}
+          <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" key={key} src={d.station_photo} />
+          <Card.Body>
+            <Card.Title>Card Title</Card.Title>
+            <Card.Text>
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </Card.Text>
+            <Button variant="primary">Go somewhere</Button>
+          </Card.Body>
+        </Card>
+   ))}
     
       </div>
     </div>
