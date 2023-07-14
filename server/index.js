@@ -538,4 +538,14 @@ app.get("/stationdata/:id",(req,res)=>{
     }
   });
 })
+app.get("/stationdetails/:id",(req,res)=>{
+  let qry26="select * from tbl_chargingstation where station_id="+req.params.id
+  db.query(qry26,(err,result) =>{
+    if(err){
+      console.log("Error");
+    } else {
+      res.send({Station:result})
+    }
+  })
+})
 

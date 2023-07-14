@@ -34,3 +34,21 @@ select {
     justify-content: space-evenly;
 
 }
+.station {
+    font-weight: 800;
+}
+.data {
+    padding: 3px;
+    font-weight: 500;
+}
+.pic {
+    width: 200px;
+     height: 150px;
+}
+.bi {
+    border:1px solid black;
+    padding: 13px;
+    padding-top: 11px;
+    margin-top: 18px;
+    border-radius: 10px;
+}

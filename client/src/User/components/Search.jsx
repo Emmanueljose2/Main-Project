@@ -59,85 +59,100 @@ export default function Search() {
       <div className="search-main">
         <table>
           <tr>
-        <td style={{padding: "20px"}}><div>
-          <label>District</label>
-        </div></td>
-       <td style={{padding: "20px"}}><div>
-          <select
-            name="district"
-            id="district"
-            onChange={(e) => {
-              getPlaceData(e.target.value);
-            }}
-          >
-            <option value="">Select District</option>
-            {districtData.map((d, key) => (
-              <option key={key} value={d.district_id}>
-                {d.district_name}
-              </option>
-            ))}
-          </select>
-        </div></td>
-        <td style={{padding: "20px"}}><div>
-          <label>Place</label>
-        </div></td>
-       <td style={{padding: "20px"}}><div>
-          <select
-            name="place"
-            id="place"
-            onChange={(e) => {
-              //  setPlace(e.target.value);
-              getLocationData(e.target.value);
-            }}
-          >
-            <option value="">Select Place</option>
-            {placeData.map((d, key) => (
-              <option key={key} value={d.place_id}>
-                {d.place_name}
-              </option>
-            ))}
-          </select>
-        </div></td>
-        <td style={{padding: "20px"}}><div>
-          <label>Location</label>
-        </div></td>
-       <td style={{padding: "20px"}}> <div>
-          <select
-            name="place"
-            id="place"
-            onChange={(e) => {
-              getStationData(e.target.value);
-              //Location(e.target.value)
-            }}
-          >
-            <option value="">Select Location</option>
-            {location.map((d, key) => (
-              <option key={key} value={d.location_id}>
-                {d.location_name}
-              </option>
-            ))}
-          </select>
-        </div></td>
-        <div>
-          {/* <button class="btn style2" onChange={() => {
+            <td style={{ padding: "20px" }}>
+              <div>
+                <label>District</label>
+              </div>
+            </td>
+            <td style={{ padding: "20px" }}>
+              <div>
+                <select
+                  name="district"
+                  id="district"
+                  onChange={(e) => {
+                    getPlaceData(e.target.value);
+                  }}
+                >
+                  <option value="">Select District</option>
+                  {districtData.map((d, key) => (
+                    <option key={key} value={d.district_id}>
+                      {d.district_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </td>
+            <td style={{ padding: "20px" }}>
+              <div>
+                <label>Place</label>
+              </div>
+            </td>
+            <td style={{ padding: "20px" }}>
+              <div>
+                <select
+                  name="place"
+                  id="place"
+                  onChange={(e) => {
+                    //  setPlace(e.target.value);
+                    getLocationData(e.target.value);
+                  }}
+                >
+                  <option value="">Select Place</option>
+                  {placeData.map((d, key) => (
+                    <option key={key} value={d.place_id}>
+                      {d.place_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </td>
+            <td style={{ padding: "20px" }}>
+              <div>
+                <label>Location</label>
+              </div>
+            </td>
+            <td style={{ padding: "20px" }}>
+              {" "}
+              <div>
+                <select
+                  name="place"
+                  id="place"
+                  onChange={(e) => {
+                    getStationData(e.target.value);
+                    //Location(e.target.value)
+                  }}
+                >
+                  <option value="">Select Location</option>
+                  {location.map((d, key) => (
+                    <option key={key} value={d.location_id}>
+                      {d.location_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </td>
+            <div>
+              {/* <button class="btn style2" onChange={() => {
            // getStation();
           }}>Search</button> */}
-        </div>
-        </tr>
+            </div>
+          </tr>
         </table>
       </div>
       <div className="cad1">
-          {stationData.map((d, key) => (
-            <Card style={{ width: "18rem" }}>
-              <Card.Img variant="top"   src={d.station_photo} />
-              <Card.Body>
-                <Card.Title>{d.station_name}</Card.Title>
-                <Link to="/Stations">
-                <Button variant="primary">View more</Button></Link>
-              </Card.Body>
-            </Card>
-          ))}
-        </div>
+        {stationData.map((d, key) => (
+          <Card style={{ width: "18rem" }}>
+            <Card.Img variant="top" src={d.station_photo} />
+            <Card.Body>
+              <Card.Title>{d.station_name}</Card.Title>
+              <Link to="./Stations">
+                <Button variant="primary">View more</Button>
+                {localStorage.setItem('sessionId', d.station_id)}
+              </Link>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
