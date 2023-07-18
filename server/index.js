@@ -200,7 +200,6 @@ app.get("/ajaxplace/:id", (req, res) => {
 app.get("/ajaxlocation/:id", (req, res) => {
   let qry17 = "select * from tbl_location where place_id=" + req.params.id;
   db.query(qry17, (err, result) => {
-    
     if (err) {
       console.log("Error");
     } else if (result.length > 0) {
@@ -402,7 +401,7 @@ app.get("/ajaxuser/:id", (req, res) => {
     if (err) {
       console.log("Error");
     } else if (result.length > 0) {
-     // console.log(result);
+      // console.log(result);
       res.send({
         user: result,
       });
@@ -414,7 +413,6 @@ app.get("/ajaxuser/:id", (req, res) => {
   });
 });
 app.post("/updateuser/:id", (req, res) => {
-  
   let qry23 =
     "update tbl_owner set owner_name='" +
     req.body.owner_name +
@@ -427,13 +425,12 @@ app.post("/updateuser/:id", (req, res) => {
     "' where owner_id=" +
     req.params.id;
 
-    console.log(qry23);
-    
+  console.log(qry23);
+
   db.query(qry23, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      
       res.send({
         message: "Data saved",
       });
@@ -441,7 +438,6 @@ app.post("/updateuser/:id", (req, res) => {
   });
 });
 app.post("/updatestation/:id", (req, res) => {
-  
   let qry24 =
     "update tbl_chargingstation set station_name='" +
     req.body.station_name +
@@ -454,98 +450,143 @@ app.post("/updatestation/:id", (req, res) => {
     "' where station_id=" +
     req.params.id;
 
-    console.log(qry24);
-    
+  console.log(qry24);
+
   db.query(qry24, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      
       res.send({
         message: "Data saved",
       });
     }
   });
 });
-app.get("/passwordstation/:id",(req,res)=>{
-  let qry25="select station_password from tbl_chargingstation where station_id="+req.params.id;
+app.get("/passwordstation/:id", (req, res) => {
+  let qry25 =
+    "select station_password from tbl_chargingstation where station_id=" +
+    req.params.id;
   db.query(qry25, (err, result) => {
-    
     if (err) {
       console.log("Error");
     } else {
-      
       res.send({
-        
-        station1:result
+        station1: result,
       });
     }
   });
 });
-app.post("/updatepassword/:id",(req,res)=>{
-  let qry26="update tbl_chargingstation set station_password='"+req.body.password+"'where station_id="+req.params.id
+app.post("/updatepassword/:id", (req, res) => {
+  let qry26 =
+    "update tbl_chargingstation set station_password='" +
+    req.body.password +
+    "'where station_id=" +
+    req.params.id;
   db.query(qry26, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      
       res.send({
         message: "Data saved",
-      });
-    }
-  });
-})
-
-app.get("/passworduser/:id",(req,res)=>{
-  let qry25="select owner_password from tbl_owner where owner_id="+req.params.id;
-  db.query(qry25, (err, result) => {
-    
-    if (err) {
-      console.log("Error");
-    } else {
-      
-      res.send({
-        
-        User:result
       });
     }
   });
 });
-app.post("/updateuserpassword/:id",(req,res)=>{
-  let qry26="update tbl_owner set owner_password='"+req.body.password+"'where owner_id="+req.params.id
+
+app.get("/passworduser/:id", (req, res) => {
+  let qry25 =
+    "select owner_password from tbl_owner where owner_id=" + req.params.id;
+  db.query(qry25, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({
+        User: result,
+      });
+    }
+  });
+});
+app.post("/updateuserpassword/:id", (req, res) => {
+  let qry26 =
+    "update tbl_owner set owner_password='" +
+    req.body.password +
+    "'where owner_id=" +
+    req.params.id;
   db.query(qry26, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      
       res.send({
         message: "Data saved",
       });
     }
   });
-})
-app.get("/stationdata/:id",(req,res)=>{
-  let qry25="select * from tbl_chargingstation where location_id="+req.params.id
+});
+app.get("/stationdata/:id", (req, res) => {
+  let qry25 =
+    "select * from tbl_chargingstation where location_id=" + req.params.id;
   db.query(qry25, (err, result) => {
-      
     if (err) {
       console.log("Error");
     } else {
       res.send({
-       Station:result
-       
+        Station: result,
       });
     }
   });
-})
-app.get("/stationdetails/:id",(req,res)=>{
-  let qry26="select * from tbl_chargingstation where station_id="+req.params.id
-  db.query(qry26,(err,result) =>{
-    if(err){
+});
+app.get("/stationdetails/:id", (req, res) => {
+  let qry26 =
+    "select * from tbl_chargingstation where station_id=" + req.params.id;
+  db.query(qry26, (err, result) => {
+    if (err) {
       console.log("Error");
     } else {
-      res.send({Station:result})
+      res.send({ Station: result });
     }
-  })
+  });
+});
+app.post(
+  "/PackageRegistor/:id",
+  upload.fields([{ name: "package_photo", maxCount: 1 }]),
+  (req, res) => {
+    var fileValue = JSON.parse(JSON.stringify(req.files));
+    var profileimgsrc = `http://127.0.0.1:${port}/images/${fileValue.package_photo[0].filename}`;
+    console.log("hello");
+    let id = req.params.id;
+    let qry27 =
+      "insert into tbl_package(package_name,package_details,package_photo,package_rate,station_id,package_duration)values('" +
+      req.body.package_name +
+      "','" +
+      req.body.package_details +
+      "','" +
+      profileimgsrc +
+      "','" +
+      req.body.package_rate +
+      "','" +
+      id +
+      "','" +
+      req.body.package_times +
+      "')";
+    db.query(qry27, (err, result) => {
+      if (err) {
+        console.log("Error");
+      } else {
+        res.send({
+          message: "Data Saved",
+        });
+      }
+    });
+  }
+);
+app.get("/Package",(req,res)=>{
+  let qry28="select * from tbl_package "
+  db.query(qry28, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      console.log(result);
+      res.send({ Package: result });
+    }
+  });
 })
-

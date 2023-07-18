@@ -13,7 +13,7 @@ export default function Search() {
   const [location, setLocationData] = useState([]);
   const [stationData, setStationData] = useState([]);
   const [locationData, Location] = useState([]);
-
+  console.log(localStorage.getItem('sessionId'));
   const getData = () => {
     axios
       .get("http://localhost:4000/district")
@@ -46,7 +46,7 @@ export default function Search() {
       .then((response) => response.data)
       .then((data) => {
         setStationData(data.Station);
-        console.log(data.Station);
+        
       });
   };
 
@@ -145,7 +145,7 @@ export default function Search() {
             <Card.Img variant="top" src={d.station_photo} />
             <Card.Body>
               <Card.Title>{d.station_name}</Card.Title>
-              <Link to="./Stations">
+              <Link to={`./Stations/${d.station_id}`}>
                 <Button variant="primary">View more</Button>
                 {localStorage.setItem('sessionId', d.station_id)}
               </Link>

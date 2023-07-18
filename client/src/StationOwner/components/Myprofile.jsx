@@ -23,10 +23,13 @@ export const Myprofile = () => {
   const [stationdata, setStationData] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [open1, setAll] = React.useState(false);
+  const [open2, setP] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleOpen1 = () => setAll(true);
+  const handleOpen2 = () => setP(true);
   const handleClose1 = () => setAll(false);
+  const handleClose2 = () => setP(false);
   const [name, setStationName] = useState("");
   const [contact, setContact] = useState("");
   const [Email, setEmail] = useState("");
@@ -34,6 +37,11 @@ export const Myprofile = () => {
   const [CurrentPassword, setCurrentpassword] = useState("");
   const [NewPassword,setNewpassword]=useState("")
   const [RetypePassword,setRetypepassword]=useState("")
+  const [PackageName,setPackageName]=useState("")
+  const [PackagePhoto,setPackagePhoto]=useState("")
+  const [PackageDetails,setPackageDetails]=useState("")
+  const [PackageRate,setPackageRate]=useState("")
+  const [Times,setTime]=useState("")
 
   useEffect(() => {
     axios
@@ -83,6 +91,18 @@ export const Myprofile = () => {
         }
       });
   };
+  const updatePackage = (e)=>{
+    
+    e.preventDefault();
+    const frm=new FormData()
+    frm.append("package_name",PackageName)
+    frm.append("package_details",PackageDetails)
+    frm.append("package_photo",PackagePhoto)
+    frm.append("package_rate",PackageRate)
+    frm.append("package_times",Times)
+
+    axios.post(`http://localhost:4000/PackageRegistor/${id}`,frm)
+  }
   return (
     <Grid container spacing={1} className="Icon">
       <Grid xs={9}>
@@ -257,7 +277,100 @@ export const Myprofile = () => {
             </Typography>
           </Box>
         </Modal>
+
       </Grid>
+      <Grid xs={8}>
+        <button className="btn btn-primary" onClick={handleOpen2}>SET PACKAGE</button>
+      </Grid>
+      <Modal  open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+       <Box sx={style} className="modalEdit">
+       <Typography id="modal-modal-title" variant="h6" component="h2">
+              Package Selection
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              <form>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail4">Package</label>
+                    <input
+                      type="text"
+                      id="inputEmail4"
+                      class="form-control style1"
+                      
+                      onChange={(e) => {
+                        setPackageName(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div class="form-group col-md-6 ">
+                    <label for="inputPassword4">Photo</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="inputPassword4"
+                      placeholder="Contact"
+                      
+                      onChange={(e) => {
+                        setPackagePhoto(e.target.files[0]);
+                      }}
+                    />
+                  </div>
+                  
+            
+                <div class="form-group">
+                  <label for="inputAddress">Details</label>
+                  <textarea
+                    id="adress"
+                    name="w3review"
+                    rows="4"
+                    cols="30"
+                    onChange={(e) => {
+                      setPackageDetails(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+                <div class="form-group col-md-6 ">
+                    <label for="inputPassword4">Rate</label>
+                    <input
+                      type="text"
+                      class="form-control style1"
+                      id="inputPassword4"
+                      
+                      onChange={(e) => {
+                        setPackageRate(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div class="form-group col-md-6 ">
+                    <label for="inputPassword4">Number of time</label>
+                    <input
+                      type="text"
+                      class="form-control style1"
+                      id="inputPassword4"
+                      
+                      onChange={(e) => {
+                        setTime(e.target.value);
+                      }}
+                    />
+                  </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  onClick={updatePackage}
+                >
+                  Set
+                </button>
+                </div>
+              </form>
+            </Typography>
+       </Box>
+        
+      </Modal>
     </Grid>
   );
 };
