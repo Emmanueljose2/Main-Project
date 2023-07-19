@@ -579,14 +579,47 @@ app.post(
     });
   }
 );
-app.get("/Package",(req,res)=>{
-  let qry28="select * from tbl_package "
+app.get("/Package", (req, res) => {
+  let qry28 = "select * from tbl_package ";
   db.query(qry28, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      console.log(result);
       res.send({ Package: result });
     }
   });
-})
+});
+app.post("/bookdata", (req, res) => {
+  console.log(req.body.package_id);
+  let qry29 =
+    "insert into tbl_packagebooking(booking_date,package_id,owner_id)values(curdate(),'" +
+    req.body.package_id +
+    "','" +
+    req.body.user_id +
+    "')";
+  db.query(qry29, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({
+        message: "Data Saved",
+      });
+    }
+  });
+});
+app.get("/PackageDetails/:id", (req, res) => {
+  console.log("hello");
+  let qry30 =
+    "select * from tbl_package p inner join tbl_packagebooking b on p.package_id=b.package_id inner join tbl_chargingstation s on p.station_id=s.station_id where owner_id=" +
+    req.params.id;
+    db.query(qry30, (err, result) => {
+      console.log(qry30);
+
+      if (err) {
+        console.log("Error");
+      } else {
+        res.send({ Package: result });
+      }
+    });
+ 
+});

@@ -13,7 +13,7 @@ import { Myprofile } from "../../components/Myprofile";
 import Search from "../../components/Search";
 import { Station } from "../../components/Station";
 import { Package } from "../../components/Package";
-import { PackageData } from "../../components/PackageData";
+import { PackageDetails } from "../../components/PackageDetails";
 export const Pages = () => {
   return (
     <>
@@ -28,7 +28,8 @@ export const Pages = () => {
         <Route path="/Blog" element={<Search />} />
         <Route path="/Stations/:id" element={<Station />} />
         <Route path="/Package" element={< Package/>} />
-        <Route path="/PackageData/:id" element={< PackageData/>} />
+        <Route path="/PackageDetails" element={< PackageDetails/>} />
+        
 
       </Routes>
         </div>
