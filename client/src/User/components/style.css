@@ -68,10 +68,7 @@ select {
     width: 100%;
     height: 50%;
 }
-.package2 {
-    /* display: flex; */
-    /* justify-content: space-around; */
-}
+
 .card-title {
     color: gray;
     font-size: 15px;
@@ -85,3 +82,18 @@ select {
 .card-text {
     color: black;
 }
+
+.custom {
+    border-collapse: separate; /* Allows spacing between cells */
+    border-spacing: 3px; /* Set the amount of spacing between cells (adjust as needed) */
+    
+  }
+  .custom th {
+    background-color: #f2f2f2; /* Example background color for header cells */
+    padding: 10px; /* Add some padding to header cells for better appearance */
+    border: 2px solid rgb(220, 188, 188);
+  }
+  .custom td {
+    padding: 10px; /* Add padding to data cells for better appearance */
+    border:2px solid #e2d4d4;
+  }

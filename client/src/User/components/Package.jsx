@@ -5,8 +5,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./style.css";
-export const Package = () => {
+export default function Package () {
   const [packageData, setPackageData] = useState([]);
+  const [packageId, setPackageId] = useState([]);
   const getPackage = () => {
     axios
       .get("http://localhost:4000/Package")
@@ -18,18 +19,17 @@ export const Package = () => {
   };
 
   const Bookdata=(id)=>{
-    
-    const frm = new FormData();
     const uid = sessionStorage.getItem("uid");
-    
-    frm.append("user_id", uid);
-    frm.append("package_id", id);
-    
+    var dat = {
+      "user_id": uid,
+      "package_id": id
+    }
     axios
-    .post("http://localhost:4000/bookdata",frm)
+    .post("http://localhost:4000/Bookdata",dat)
     .then((response) => response.data)
     .then((data) => {
-      console.log(data);
+         setPackageId(data.Package_id)  
+         console.log(data.Package_id);
     });
   }
 

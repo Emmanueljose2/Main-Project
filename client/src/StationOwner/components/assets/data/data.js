@@ -13,6 +13,10 @@ export const navlist = [
     text: "Logout",
     path: "/Logout",
   },
+  {
+    text:"Packages",
+    path: "/StationOwner/Packages"
+  }
   
 ]
 export const hero = [

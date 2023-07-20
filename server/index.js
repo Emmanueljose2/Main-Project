@@ -589,8 +589,7 @@ app.get("/Package", (req, res) => {
     }
   });
 });
-app.post("/bookdata", (req, res) => {
-  console.log(req.body.package_id);
+app.post("/Bookdata", (req, res) => {
   let qry29 =
     "insert into tbl_packagebooking(booking_date,package_id,owner_id)values(curdate(),'" +
     req.body.package_id +
@@ -601,9 +600,17 @@ app.post("/bookdata", (req, res) => {
     if (err) {
       console.log("Error");
     } else {
-      res.send({
-        message: "Data Saved",
+      let qry31="select max(booking_id) from tbl_packagebooking"
+      db.query(qry31, (err, result) => {
+        if (err) {
+          console.log("Error");
+        } else {
+          res.send({ Package_id: result });
+        }
+        console.log(result);
       });
+    
+      
     }
   });
 });
@@ -611,6 +618,22 @@ app.get("/PackageDetails/:id", (req, res) => {
   console.log("hello");
   let qry30 =
     "select * from tbl_package p inner join tbl_packagebooking b on p.package_id=b.package_id inner join tbl_chargingstation s on p.station_id=s.station_id where owner_id=" +
+    req.params.id;
+    db.query(qry30, (err, result) => {
+      console.log(qry30);
+
+      if (err) {
+        console.log("Error");
+      } else {
+        res.send({ Package: result });
+      }
+    });
+ 
+});
+app.get("/PackageUserDetails/:id", (req, res) => {
+  console.log("hello");
+  let qry30 =
+    "select * from tbl_package p inner join tbl_packagebooking b on p.package_id=b.package_id inner join tbl_owner s on b.owner_id=s.owner_id where station_id=" +
     req.params.id;
     db.query(qry30, (err, result) => {
       console.log(qry30);
