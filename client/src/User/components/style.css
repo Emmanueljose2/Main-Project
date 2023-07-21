@@ -97,3 +97,13 @@ select {
     padding: 10px; /* Add padding to data cells for better appearance */
     border:2px solid #e2d4d4;
   }
+  .station-info {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .station-info label {
+    width: 150px;
+    padding: 5px;
+  }
+  

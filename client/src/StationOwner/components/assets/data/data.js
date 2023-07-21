@@ -16,6 +16,10 @@ export const navlist = [
   {
     text:"Packages",
     path: "/StationOwner/Packages"
+  },
+  {
+    text:"Slots",
+    path:"/StationOwner/slots"
   }
   
 ]

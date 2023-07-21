@@ -3,6 +3,8 @@ import anime from "animejs";
 import { Button } from "@mui/material";
 import PaymentIcon from "@mui/icons-material/Payment";
 import "./assets/css/Payment.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function PaymentGateway() {
   const [cardNumber, setCardNumber] = useState("0000 0000 0000 0000");
@@ -10,6 +12,8 @@ export default function PaymentGateway() {
   const [cardExpirationDate, setCardExpirationDate] = useState("");
   const [cardCVV, setCardCVV] = useState("");
   const [cardType, setCardType] = useState("💳");
+  const { bid } = useParams();
+  console.log(bid);
 
   const flipCard = () => {
     anime({
@@ -68,6 +72,15 @@ export default function PaymentGateway() {
     const cardCVV = e.target.value;
     setCardCVV(cardCVV);
   };
+  const setStatus =() =>{
+    axios.post(`http://localhost:4000/setdata/${bid}`).then((response) => response.data)
+    .then((data) => {
+        alert(data.message)
+    });
+
+
+  }
+  
 
   return (
     <div className="container-pg">
@@ -151,7 +164,8 @@ export default function PaymentGateway() {
         </div>
       </form>
       <div>
-        <Button className="pay_btn">
+        <Button className="pay_btn" 
+        onClick={()=>{setStatus()}}>
           Click to Pay
           <PaymentIcon />
         </Button>

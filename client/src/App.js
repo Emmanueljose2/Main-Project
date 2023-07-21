@@ -13,7 +13,7 @@ export default function App() {
       <Route path="/Admin/*" element={<Admin />} />
       <Route path="/User/*" element={<User />} />
       <Route path="/StationOwner/*" element={<StationOwner/>}/>
-      <Route path="/Payment" element={<PaymentGateway/>}/>
+      <Route path="/Payment/:bid" element={<PaymentGateway/>}/>
       
     </Routes>
   );

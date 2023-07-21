@@ -1,6 +1,7 @@
 import axios from "axios";
 import "./style.css";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function PackageDetails() {
   const uid = sessionStorage.getItem("uid");
@@ -25,23 +26,30 @@ export default function PackageDetails() {
 
           <th>Station</th>
 
-          <th>Status</th>
+         
 
           <th>About</th>
 
           <th>Number of times</th>
+          <th>Slot Booking</th>
         </tr>
-        <tr>
+        
+          
           {packageData.map((d, key) => (
+            <tr>
             <React.Fragment key={key}>
               <td>{d.package_name} </td>
               <td>{d.station_name}</td>
-              <td>{d.booking_status}</td>
+              
               <td>{d.package_details}</td>
               <td>{d.package_duration}</td>
+              <Link to={`../slotbooking/${d.station_id}/${d.package_id}`}>
+              <td><button className="btn btn-primary" >Slot</button></td>
+              </Link>
             </React.Fragment>
+            </tr>
           ))}
-        </tr>
+       
       </table>
     </div>
   );

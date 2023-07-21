@@ -10,6 +10,10 @@ import Search from "../../components/Search";
 import { Station } from "../../components/Station";
 import PackageDetails from "../../components/PackageDetails";
 import Package from "../../components/Package";
+import Slotbooking from "../../components/Slotbooking";
+import Slots from "../../components/Slots";
+
+import Instantslot from '../../../User/components/Instantslot';
 export const Pages = () => {
   return (
     <>
@@ -25,6 +29,9 @@ export const Pages = () => {
         <Route path="/Stations/:id" element={<Station />} />
         <Route path="/Package" element={< Package/>} />
         <Route path="/PackageDetails" element={< PackageDetails/>} />
+        <Route path="/slotbooking/:id/:vid" element={< Slotbooking/>} />
+        <Route path="/slots" element={< Slots/>} />
+        <Route path="/instantslot" element={<Instantslot/>}/>
         
 
       </Routes>

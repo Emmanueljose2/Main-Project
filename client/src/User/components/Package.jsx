@@ -3,11 +3,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 export default function Package () {
   const [packageData, setPackageData] = useState([]);
-  const [packageId, setPackageId] = useState([]);
+  const navigate = useNavigate();
   const getPackage = () => {
     axios
       .get("http://localhost:4000/Package")
@@ -28,8 +28,9 @@ export default function Package () {
     .post("http://localhost:4000/Bookdata",dat)
     .then((response) => response.data)
     .then((data) => {
-         setPackageId(data.Package_id)  
-         console.log(data.Package_id);
+        var id = data.Booking_id.latest_booking_id;
+        navigate(`/Payment/${id}`)
+
     });
   }
 

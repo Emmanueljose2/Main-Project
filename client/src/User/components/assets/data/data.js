@@ -1,5 +1,5 @@
-import { FcCheckmark } from "react-icons/fc"
-import { AiOutlineClose } from "react-icons/ai"
+import { FcCheckmark } from "react-icons/fc";
+import { AiOutlineClose } from "react-icons/ai";
 export const navlist = [
   {
     text: "home",
@@ -9,13 +9,18 @@ export const navlist = [
     text: "My Profile",
     path: "/User/Myprofile",
   },
-  
- 
+
   {
     text: "LogOut",
     path: "/contact",
   },
-]
+  { text: "Package Booking", 
+    path: "/User/PackageDetails" },
+    {
+      text:"Slot Booking",
+      path:"/User/slots"
+    }
+];
 export const hero = [
   {
     id: 1,
@@ -47,7 +52,7 @@ export const hero = [
     name: "Mockup Design",
     items: "7",
   },
-]
+];
 export const products = [
   {
     id: 1,
@@ -121,7 +126,7 @@ export const products = [
     category: "icons",
     qty: 0,
   },
-]
+];
 export const banner = [
   {
     id: 1,
@@ -137,7 +142,7 @@ export const banner = [
     desc: "Sale 30% Off For Members",
     cover: "../images/banner/b1.png",
   },
-]
+];
 export const topProducts = [
   {
     id: 20,
@@ -212,7 +217,7 @@ export const topProducts = [
     category: "mockups",
     qty: 0,
   },
-]
+];
 export const price = [
   {
     id: 1,
@@ -310,7 +315,7 @@ export const price = [
       },
     ],
   },
-]
+];
 export const customer = [
   {
     id: 1,
@@ -330,7 +335,7 @@ export const customer = [
     name: "ALGISTINO",
     post: "Marketing Company Director",
   },
-]
+];
 export const blog = [
   {
     id: 1,
@@ -374,4 +379,4 @@ export const blog = [
     category: "lifestyle",
     cover: "../images/blog/b6.jpg",
   },
-]
+];

@@ -5,6 +5,7 @@
   import { Home } from '../Home';
   import {Myprofile} from '../../components/Myprofile'
   import Packages from '../../components/Packages';
+  import Slot from '../../components/Slot';
   export const Pages = () => {
     return (
       <>
@@ -15,6 +16,9 @@
         <Route path="/home" element={<Home />} />
         <Route path="/Myprofile" element={<Myprofile />} />
         <Route path="/Packages" element={<Packages/>}/>
+        <Route path="/slots" element={<Slot/>}/>
+        
+    
       </Routes>
         <Footer/>
       </>
