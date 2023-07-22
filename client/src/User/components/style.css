@@ -106,4 +106,7 @@ select {
     width: 150px;
     padding: 5px;
   }
+  .duration{
+    width: auto!important;
+  }
   

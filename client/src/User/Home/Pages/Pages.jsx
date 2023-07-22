@@ -31,7 +31,7 @@ export const Pages = () => {
         <Route path="/PackageDetails" element={< PackageDetails/>} />
         <Route path="/slotbooking/:id/:vid" element={< Slotbooking/>} />
         <Route path="/slots" element={< Slots/>} />
-        <Route path="/instantslot" element={<Instantslot/>}/>
+        <Route path="/instantslot/:id" element={<Instantslot/>}/>
         
 
       </Routes>

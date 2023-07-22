@@ -60,7 +60,7 @@ export const Station = () => {
         </div>
       ))}
       <div className="package">
-        <Link to="/User/instantslot">
+        <Link to={`/User/instantslot/${id}`}>
           <button className="btn btn-primary">Book Station</button>
         </Link>{" "}
         <Link to="/User/Package">

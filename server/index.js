@@ -677,27 +677,113 @@ app.post("/slotdata", (req, res) => {
     }
   });
 });
-app.get("/slot/:id",(req,res)=>{
-  let qry33="select * from tbl_slotbooking s inner join tbl_chargingstation c on s.station_id=c.station_id inner join tbl_package p on s.package_id=p.package_id where owner_id="+req.params.id
-  
+app.get("/slot/:id", (req, res) => {
+  let qry33 =
+    "select * from tbl_slotbooking s inner join tbl_chargingstation c on s.station_id=c.station_id inner join tbl_package p on s.package_id=p.package_id where owner_id=" +
+    req.params.id;
+
   db.query(qry33, (err, result) => {
     console.log(qry33);
     if (err) {
       console.log("Error");
     } else {
-      res.send({slot:result });
+      res.send({ slot: result });
     }
   });
-
-})
-app.get("/slotuser/:id",(req,res)=>{
-  let qry34="select * from tbl_slotbooking s inner join tbl_owner c on s.owner_id=c.owner_id inner join tbl_package p on s.package_id=p.package_id where s.station_id="+req.params.id
+});
+app.get("/slotuser/:id", (req, res) => {
+  let qry34 =
+    "select * from tbl_slotbooking s inner join tbl_owner c on s.owner_id=c.owner_id inner join tbl_package p on s.package_id=p.package_id where s.station_id=" +
+    req.params.id;
   db.query(qry34, (err, result) => {
     console.log(qry34);
     if (err) {
       console.log("Error");
     } else {
-      res.send({slot:result });
+      res.send({ slot: result });
     }
   });
-})
+});
+app.post("/instantbook", (req, res) => {
+  let qry37 =
+    "select slot_count from tbl_chargingstation where station_id=" +
+    req.body.station_id;
+  db.query(qry37, (err, result) => {
+    console.log(qry37);
+    if (err) {
+      console.log("Error");
+    } else {
+        let qry38 ="SELECT `slot_id`,`slot_date`,`slot_time`,`owner_id`,`station_id`,`package_id`,`slot_status`,`slot_duration`,TIME_FORMAT(CONCAT(`slot_date`, ' ', `slot_time`), '%H:%i') AS `start_time`,TIME_FORMAT(ADDTIME(CONCAT(`slot_date`, ' ', `slot_time`), SEC_TO_TIME(`slot_duration`*60)), '%H:%i') AS `end_time` FROM `tbl_slotbooking` where slot_date= '"+req.body.bookDate+"';
+     
+    console.log(qry38); 
+      db.query(qry38, (err, result) => {
+          console.log(qry38);
+          if (err) {
+            console.log("Error");
+          } else {
+            res.send({ slot: result });
+          }
+        });
+    }
+  });
+
+  let qry35 =
+    "select * from  tbl_packagebooking where owner_id=" +
+    req.body.owner_id +
+    " and booking_status=1";
+
+  db.query(qry35, (err, result) => {
+    if (err) {
+      console.log("Error1");
+    } else {
+      let packageid = result[0].package_id;
+      if (result.length > 0) {
+        let qry35 =
+          "select package_duration from tbl_package where package_id=" +
+          packageid;
+        db.query(qry35, (err, result1) => {
+          let package_duration = result1[0];
+          if (err) {
+            console.log("Error2");
+          } else {
+            let qry36 =
+              "select count(package_id) as usage_count from tbl_slot_booking";
+            let package_count = usage_count;
+            db.query(qry36, (err, result2) => {
+              console.log(qry36);
+              if (err) {
+                console.log("Error3");
+              } else {
+                if (package_duration >= package_count) {
+                  let qry34 =
+                    "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id,slot_duration)values('" +
+                    req.body.book_Date +
+                    "','" +
+                    req.body.book_Time +
+                    "','" +
+                    req.body.owner_id +
+                    "','" +
+                    req.body.station_id +
+                    "'," +
+                    packageid +
+                    ",'" +
+                    req.body.book_Duration +
+                    "')";
+                  db.query(qry34, (err, result) => {
+                    console.log(qry34);
+                    if (err) {
+                      console.log("Error");
+                    } else {
+                      res.send({ slot: result });
+                    }
+                  });
+                } else {
+                }
+              }
+            });
+          }
+        });
+      }
+    }
+  });
+});
