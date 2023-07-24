@@ -6,6 +6,7 @@ const Slotbooking = () => {
   const [stationData, setStationData] = useState([]);
   const [Time, setTime] = useState("");
   const [Date, setDate] = useState("");
+  const [Rate,setRate]=useState("")
   const { id } = useParams();
   const { vid } = useParams();
   console.log(id);
@@ -21,12 +22,22 @@ const Slotbooking = () => {
     
   }
   const slotdata =()=>{
+    if(Time==30)
+    {
+    setRate('50')
+    }
+    else if(Time==60)
+    {
+      setRate('100')
+    }
+    console.log(Rate);
     var dat={
       Time: Time,
       Date:Date,
       station_id:id,
       package_id:vid,
-      user_id:sessionStorage.getItem("uid")
+      user_id:sessionStorage.getItem("uid"),
+      Rate:Rate
     }
     axios.post(`http://localhost:4000/slotdata`,dat).then((response) => response.data)
     .then((data) => {

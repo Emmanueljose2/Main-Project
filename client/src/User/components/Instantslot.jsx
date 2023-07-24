@@ -9,31 +9,53 @@ const Instantslot = () => {
     const [Time,setTime]=useState("")
     const [Date,setDate]=useState("")
     const [Duration,setDuration]=useState("")
+    const [Rate,setRate]=useState("")
     const storedUid = sessionStorage.getItem("uid");
     const navigate = useNavigate();
  const   FetchSlot =() =>{
         axios.get(`http://localhost:4000/stationdetails/${id}`).then((response)=>response.data).then((data)=>{
             setStationdetails(data.Station[0])
-            console.log(data.Station[0]);
+            
         })
     }
     const slotbook=()=>{
+      if(Duration==30)
+      {
+      setRate('50')
+      }
+      else if(Duration==60)
+      {
+        setRate('100')
+      }
       var dat={
         book_Time:Time,
         book_Date:Date,
         book_Duration:Duration,
         owner_id:storedUid,
-        station_id:id
+        station_id:id,
+        Rate: Rate
       }
       axios.post(`http://localhost:4000/instantbook`,dat).then((response)=>response.data).then((data)=>{
-        axios.get(`http://localhost:4000/instantbookdata`).then((response)=>response.data).then((data)=>{
-
+        console.log(data);
+        // alert(data)
+        if(data.message=='PAYMENT')
+        { 
+          axios.get(`http://localhost:4000/instantbookdata`).then((response)=>response.data).then((data)=>{
+            let bid=data.booking_Id;
+           
+          sessionStorage.setItem('ptype', "INSTANT");
+          navigate(`/Payment/${bid}`);
+        
         })
+        }
+        else{
+          alert(data.message)
+          
+        }
+        
 
        
-
-        sessionStorage.setItem('ptype', "INSTANT");
-        navigate(`/Payment/${id}`);
+        
       })
     }
     useEffect(() => {

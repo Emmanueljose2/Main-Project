@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import PaymentIcon from "@mui/icons-material/Payment";
 import "./assets/css/Payment.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 
 export default function PaymentGateway() {
   const [cardNumber, setCardNumber] = useState("0000 0000 0000 0000");
@@ -13,6 +13,7 @@ export default function PaymentGateway() {
   const [cardCVV, setCardCVV] = useState("");
   const [cardType, setCardType] = useState("💳");
   const { bid } = useParams();
+  const navigate = useNavigate();
   console.log(bid);
 
   const flipCard = () => {
@@ -73,10 +74,24 @@ export default function PaymentGateway() {
     setCardCVV(cardCVV);
   };
   const setStatus =() =>{
+    let mode=sessionStorage.getItem('ptype')
+    if(mode=="INSTANT")
+    {
+      axios.post(`http://localhost:4000/setbooking/${bid}`).then((response)=>response.data).then((data)=>{
+        alert(data.message)
+        navigate(`/user/bookslip/${bid}`) 
+
+      })
+    }
+    else{
     axios.post(`http://localhost:4000/setdata/${bid}`).then((response) => response.data)
     .then((data) => {
         alert(data.message)
+       navigate('/bookslip') 
+
+        
     });
+  }
 
 
   }

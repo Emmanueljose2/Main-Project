@@ -109,4 +109,59 @@ select {
   .duration{
     width: auto!important;
   }
+  .main-tcket {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.ticket {
+    max-width: 350px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #0066cc;
+  margin-bottom: 15px;
+}
+
+.ticket-info {
+  margin-top: 10px;
+}
+
+.ticket-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.ticket-total {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #333;
+}
+.ticket-logo {
+  display: block;
+  max-width: 80px;
+  margin: 0 auto 10px;
+}
+
+.ticket-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+}
+
   
