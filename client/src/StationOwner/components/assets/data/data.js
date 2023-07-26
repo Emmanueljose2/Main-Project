@@ -20,6 +20,10 @@ export const navlist = [
   {
     text:"Slots",
     path:"/StationOwner/slots"
+  },
+  {
+    text:"Offline bookings",
+    path:"/StationOwner/offline"
   }
   
 ]

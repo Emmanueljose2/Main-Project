@@ -525,7 +525,7 @@ app.post("/updateuserpassword/:id", (req, res) => {
 });
 app.get("/stationdata/:id", (req, res) => {
   let qry25 =
-    "select * from tbl_chargingstation where location_id=" + req.params.id + " station_status=1";
+    "select * from tbl_chargingstation where location_id=" + req.params.id 
   db.query(qry25, (err, result) => {
     if (err) {
       console.log("Error");
@@ -869,4 +869,26 @@ app.get("/billdata/:id",(req,res)=>{
     }
   });
 })
-
+app.post("/offlinedata",(req,res)=>{
+  let qry42="insert into tbl_offline(customer_name,customer_phone,customer_email,offline_date,offline_time,station_id,Customer_usage)values('"+req.body.Customer_name+"','"+req.body.Customer_phone+"','"+req.body.Customer_email+"','"+req.body.Customer_Date+"','"+req.body.Customer_Time+"','"+req.body.Customer_Date+"','"+req.body.Station_id+"','"+req.body.Customer_Charge+"')";
+  db.query(qry42, (err, result) => {
+    console.log(qry42);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({message :"Sucessfully Added" });
+    }
+  });
+})
+app.post("/Chargeusage",(req,res)=>{
+  
+  let qry43="update tbl_slotbooking set slot_usage='"+req.body.usage+"' where station_id="+req.body.sid
+  db.query(qry43, (err, result) => {
+    console.log(qry43);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({message :"Sucessfully Added" });
+    }
+  });
+})

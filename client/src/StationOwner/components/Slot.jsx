@@ -11,6 +11,16 @@ const Slot = () => {
          setSlotdata(data.slot[0])
         });
     }
+    const setUsage=()=>{
+       var value= prompt("Enter the Usage")
+      const dat={
+        usage:value,
+        sid:id
+       }
+        axios.post(`http://localhost:4000/Chargeusage`,dat).then((response)=>response.data).then((data)=>{
+            alert(data.message)
+        })
+    }
     useEffect(() => {
         slotdata();
       }, []);
@@ -26,15 +36,18 @@ const Slot = () => {
         <th>
             Booking Date
         </th>
+       
         <th>
-            Package Name
+            Finish
         </th>
     </tr>
         <tr>
         <td>{slot.owner_name}</td>
         <td>{slot.slot_time}</td>
         <td>{slot.slot_date}</td>
-        <td>{slot.package_name}</td>
+        
+        
+        <td><button className='btn btn-primary' onClick={()=>setUsage()}>Finish</button></td>
         
         </tr>
         

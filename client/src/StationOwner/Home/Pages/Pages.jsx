@@ -6,6 +6,7 @@
   import {Myprofile} from '../../components/Myprofile'
   import Packages from '../../components/Packages';
   import Slot from '../../components/Slot';
+  import Offline from '../../components/offline';
   export const Pages = () => {
     return (
       <>
@@ -17,7 +18,7 @@
         <Route path="/Myprofile" element={<Myprofile />} />
         <Route path="/Packages" element={<Packages/>}/>
         <Route path="/slots" element={<Slot/>}/>
-        
+        <Route path="/offline" element={<Offline/>}/>
     
       </Routes>
         <Footer/>
