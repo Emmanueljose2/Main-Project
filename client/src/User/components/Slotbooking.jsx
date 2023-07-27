@@ -22,14 +22,7 @@ const Slotbooking = () => {
     
   }
   const slotdata =()=>{
-    if(Time==30)
-    {
-    setRate('50')
-    }
-    else if(Time==60)
-    {
-      setRate('100')
-    }
+   
     console.log(Rate);
     var dat={
       Time: Time,
@@ -37,7 +30,7 @@ const Slotbooking = () => {
       station_id:id,
       package_id:vid,
       user_id:sessionStorage.getItem("uid"),
-      Rate:Rate
+      
     }
     axios.post(`http://localhost:4000/slotdata`,dat).then((response) => response.data)
     .then((data) => {

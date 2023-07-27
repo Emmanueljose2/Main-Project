@@ -77,18 +77,7 @@ export default function PaymentGateway() {
     setCardCVV(cardCVV);
   };
   const setStatus =() =>{
-    let mode=sessionStorage.getItem('ptype')
-    if(mode=="INSTANT")
-    {
-      axios.post(`http://localhost:4000/setbooking/${bid}`).then((response)=>response.data).then((data)=>{
-        alert(data.message)
-        navigate(`/user/bookslip/${bid}`) 
-
-      })
-    }
-    else{
-     
-    
+   
       var dat ={
         user_id:userid,
         booking_id:Bookingid,
@@ -102,9 +91,6 @@ export default function PaymentGateway() {
 
         
     });
-  }
-
-
   }
   
 

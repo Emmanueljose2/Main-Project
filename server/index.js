@@ -647,24 +647,31 @@ app.post("/setdata", (req, res) => {
   let qry31 =
     "update tbl_packagebooking set booking_status=1 where booking_id=" +
     req.body.booking_id;
-  console.log(qry31);
   db.query(qry31, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      res.send({ message: "status updated" });
       let qry44 =
         "update tbl_owner set owner_balance='" +
         req.body.usage +
         "' where owner_id=" +
         req.body.user_id;
       db.query(qry44, (err, result) => {
-        console.log(qry44);
-
         if (err) {
           console.log("Error");
         } else {
-          res.send({ Package: result });
+          let qry48 =
+            "update tbl_owner set Package_status=1 where owner_id=" +
+            req.body.user_id;
+          db.query(qry48, (err, result) => {
+            console.log(qry48);
+
+            if (err) {
+              console.log("Error");
+            } else {
+              res.send({ message: "payment completed" });
+            }
+          });
         }
       });
     }
@@ -844,6 +851,8 @@ app.post("/offlinedata", (req, res) => {
   });
 });
 app.post("/Chargeusage", (req, res) => {
+  let slid = req.body.sid;
+  let used = req.body.usage;
   let qry43 =
     "update tbl_slotbooking set slot_usage='" +
     req.body.usage +
@@ -852,34 +861,41 @@ app.post("/Chargeusage", (req, res) => {
     "' where slot_id=" +
     req.body.sid;
   db.query(qry43, (err, result) => {
-    console.log(qry43);
     if (err) {
       console.log("Error");
     } else {
       res.send({ message: "Sucessfully Added" });
       let qry45 =
-        "select * from tbl_slotbooking s inner join  tbl_owner o on s.owner_id=o.owner_id ";
+        "select * from tbl_slotbooking s inner join tbl_owner o on s.owner_id=o.owner_id where slot_id=" +
+        slid;
       db.query(qry45, (err, result1) => {
-        console.log(qry45);
         if (err) {
           console.log("Error");
         } else {
           let balance = result1[0].owner_balance;
-          let used = req.body.usage;
           let currentbalance = balance - used;
-
           let qry46 =
             "update tbl_owner set owner_balance='" +
             currentbalance +
             "' where owner_id=" +
             result1[0].owner_id;
           db.query(qry46, (err, result) => {
-            console.log(qry46);
             if (err) {
               console.log("Error");
             } else {
-              console.log("Charging Finished");
-              res.send({ message: "Charging Finished" });
+              if (currentbalance <= 0) {
+                let qry48 =
+                  "update tbl_owner set Package_status=0 where owner_id=" +
+                  result1[0].owner_id;
+                  console.log(qry48);
+                db.query(qry48, (err, result) => {
+                  if (err) {
+                    console.log("Error");
+                  } else {
+                    res.send({ message: "Package has been ended" });
+                  }
+                });
+              }
             }
           });
         }
@@ -896,6 +912,26 @@ app.post("/changeslotstatus/:id", (req, res) => {
       console.log("Error");
     } else {
       res.send({ message: "Charging Finished" });
+    }
+  });
+});
+app.get("/bookstation/:sid/:uid", (req, res) => {
+  let qry47 =
+    "SELECT * FROM tbl_packagebooking b inner join tbl_package p on b.package_id=p.package_id inner join tbl_owner o on o.owner_id=b.owner_id WHERE station_id =" +
+    req.params.sid +
+    " AND b.owner_id =" +
+    req.params.uid +
+    " AND booking_status = 1  ";
+  console.log(qry47);
+  db.query(qry47, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      if (result.length > 0) {
+        res.send({ PackageData: result });
+      } else {
+        res.send({ PackageData: false });
+      }
     }
   });
 });

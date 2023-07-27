@@ -20,10 +20,16 @@ const navLinks = [
     display: "Location",
   },
   {
+    path:"/Admin/verification",
+    icon:"ri-check-double-line",
+    display:"Verification"
+  },
+  {
     path: "/Admin/settings",
     icon: "ri-settings-2-line",
     display: "Settings",
   },
+  
 ];
 
 export default navLinks;
