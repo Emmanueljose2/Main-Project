@@ -14,7 +14,10 @@ export default function PaymentGateway() {
   const [cardType, setCardType] = useState("💳");
   const { bid } = useParams();
   const navigate = useNavigate();
-  console.log(bid);
+  const userid=sessionStorage.getItem("user_id")
+  const Bookingid=sessionStorage.getItem("booking_id")
+  const usage=sessionStorage.getItem("usage")
+  console.log(userid);
 
   const flipCard = () => {
     anime({
@@ -84,8 +87,16 @@ export default function PaymentGateway() {
       })
     }
     else{
-    axios.post(`http://localhost:4000/setdata/${bid}`).then((response) => response.data)
+     
+    
+      var dat ={
+        user_id:userid,
+        booking_id:Bookingid,
+        usage:usage
+      }
+    axios.post(`http://localhost:4000/setdata`,dat).then((response) => response.data)
     .then((data) => {
+      
         alert(data.message)
        navigate('/bookslip') 
 

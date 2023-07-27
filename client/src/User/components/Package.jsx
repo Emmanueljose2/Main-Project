@@ -28,8 +28,12 @@ export default function Package () {
     .post("http://localhost:4000/Bookdata",dat)
     .then((response) => response.data)
     .then((data) => {
-        var id = data.Booking_id.latest_booking_id;
-        navigate(`/Payment/${id}`)
+        console.log(data.Booking_data.owner_id);
+        sessionStorage.setItem("booking_id",data.Booking_data.booking_id)
+        sessionStorage.setItem("user_id",data.Booking_data.owner_id)
+        sessionStorage.setItem("usage",data.Booking_data.Kilowatt)
+
+        navigate(`/Payment`)
 
     });
   }

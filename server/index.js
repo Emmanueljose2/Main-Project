@@ -525,7 +525,7 @@ app.post("/updateuserpassword/:id", (req, res) => {
 });
 app.get("/stationdata/:id", (req, res) => {
   let qry25 =
-    "select * from tbl_chargingstation where location_id=" + req.params.id 
+    "select * from tbl_chargingstation where location_id=" + req.params.id;
   db.query(qry25, (err, result) => {
     if (err) {
       console.log("Error");
@@ -602,12 +602,12 @@ app.post("/Bookdata", (req, res) => {
       console.log("Error");
     } else {
       let qry31 =
-        "select max(booking_id) as latest_booking_id from tbl_packagebooking";
+        "select * from tbl_packagebooking p INNER JOIN tbl_package pk on p.package_id=pk.package_id where booking_id=(select max(booking_id) as latest_booking_id from tbl_packagebooking)";
       db.query(qry31, (err, result) => {
         if (err) {
           console.log("Error");
         } else {
-          res.send({ Booking_id: result[0] });
+          res.send({ Booking_data: result[0] });
         }
       });
     }
@@ -643,41 +643,55 @@ app.get("/PackageUserDetails/:id", (req, res) => {
     }
   });
 });
-app.post("/setdata/:id", (req, res) => {
+app.post("/setdata", (req, res) => {
   let qry31 =
     "update tbl_packagebooking set booking_status=1 where booking_id=" +
-    req.params.id;
+    req.body.booking_id;
   console.log(qry31);
   db.query(qry31, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
       res.send({ message: "status updated" });
+      let qry44 =
+        "update tbl_owner set owner_balance='" +
+        req.body.usage +
+        "' where owner_id=" +
+        req.body.user_id;
+      db.query(qry44, (err, result) => {
+        console.log(qry44);
+
+        if (err) {
+          console.log("Error");
+        } else {
+          res.send({ Package: result });
+        }
+      });
     }
   });
 });
-app.post("/slotdata", (req, res) => {
-  let qry32 =
-    "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id)values('" +
-    req.body.Date +
-    "','" +
-    req.body.Time +
-    "','" +
-    req.body.user_id +
-    "','" +
-    req.body.station_id +
-    "','" +
-    req.body.package_id +
-    "')";
-  db.query(qry32, (err, result) => {
-    console.log(qry32);
-    if (err) {
-      console.log("Error");
-    } else {
-      res.send({ message: "data saved" });
-    }
-  });
-});
+// app.post("/slotdata", (req, res) => {
+//   let qry32 =
+//     "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id)values('" +
+//     req.body.Date +
+//     "','" +
+//     req.body.Time +
+//     "','" +
+//     req.body.user_id +
+//     "','" +
+//     req.body.station_id +
+//     "','" +
+//     req.body.package_id +
+//     "')";
+//   db.query(qry32, (err, result) => {
+//     console.log(qry32);
+//     if (err) {
+//       console.log("Error");
+//     } else {
+//       res.send({ message: "data saved" });
+//     }
+//   });
+// });
 app.get("/slot/:id", (req, res) => {
   let qry33 =
     "select * from tbl_slotbooking s inner join tbl_chargingstation c on s.station_id=c.station_id inner join tbl_package p on s.package_id=p.package_id where owner_id=" +
@@ -705,12 +719,11 @@ app.get("/slotuser/:id", (req, res) => {
     }
   });
 });
-app.post("/instantbook", (req, res) => {
+app.post("/slotdata", (req, res) => {
   let qry37 =
     "select slot_count as sl_count  from tbl_chargingstation where station_id=" +
     req.body.station_id;
   db.query(qry37, (err, result) => {
-
     if (err) {
       console.log("Error");
     } else {
@@ -730,165 +743,159 @@ app.post("/instantbook", (req, res) => {
           console.log("Slot Count" + slot_count);
           if (result[0].active_slot < slot_count) {
             //Book SLots
-            console.log("Slot Pending");
-            let qry35 =
-              "select * from  tbl_packagebooking where owner_id=" +
+            let qry34 =
+              "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id,slot_duration,slot_status)values('" +
+              req.body.book_Date +
+              "','" +
+              req.body.book_Time +
+              "','" +
               req.body.owner_id +
-              " and booking_status=1";
-
-            db.query(qry35, (err, result) => {
-              console.log(qry35);
+              "','" +
+              req.body.station_id +
+              "'," +
+              packageid +
+              ",'" +
+              req.body.book_Duration +
+              "',1)";
+            db.query(qry34, (err, result) => {
+              console.log(qry34);
               if (err) {
-                console.log("Error1");
+                console.log("Error");
               } else {
-                let packageid = result[0].package_id;
-                
-                if (result.length > 0) {
-                  let qry35 =
-                    "select package_duration from tbl_package where package_id=" +
-                    packageid;
-                  db.query(qry35, (err, result1) => {
-                    if (err) {
-                      console.log("Error2");
-                    } else {
-                      let package_duration = result1[0].package_duration;
-                      let qry36 =
-                        "select count(package_id) as usage_count from tbl_slotbooking";
-                     
-                      db.query(qry36, (err, result2) => {
-                        console.log(qry36);
-                        if (err) {
-                          console.log("Error3");
-                        } else {
-                          let package_count = result2[0].usage_count;
-                          console.log("Package COunt" + package_count);
-                          console.log("Duration" + package_duration);
-                          if (package_duration >= package_count) {
-                            console.log("premiurm member");
-                            let qry34 =
-                              "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id,slot_duration,slot_status)values('" +
-                              req.body.book_Date +
-                              "','" +
-                              req.body.book_Time +
-                              "','" +
-                              req.body.owner_id +
-                              "','" +
-                              req.body.station_id +
-                              "'," +
-                              packageid +
-                              ",'" +
-                              req.body.book_Duration +
-                              "',1)";
-                            db.query(qry34, (err, result) => {
-                              console.log(qry34);
-                              if (err) {
-                                console.log("Error");
-                              } else {
-                                res.send({ message: "Slot Booking Completed" });
-                              }
-                            });
-                          } else {
-                            console.log("not a premiurm member");
-                            slotBooking();
-                          }
-                        }
-                      });
-                    }
-                  });
-                }
+                res.send({ message: "Slot Booking Completed" });
               }
             });
           } else {
-            console.log("unsub mem");
-            slotBooking()
+            res.send({
+              message: "No slots available",
+            });
           }
         }
       });
     }
   });
-  const slotBooking=()=>{
-    let qry34 =
-                                "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,slot_duration,Rate)values('" +
-                                req.body.book_Date +
-                                "','" +
-                                req.body.book_Time +
-                                "','" +
-                                req.body.owner_id +
-                                "','" +
-                                req.body.station_id +
-                                "','" +
-                                req.body.book_Duration +
-                                "','"+req.body.Rate+"')";
-                              db.query(qry34, (err, result) => {
-                                console.log(qry34);
-                                if (err) {
-                                  console.log("Error");
-                                } else {
-                                  res.send({ message: 'PAYMENT' });
-                                }
-                              });
-  }
 });
-app.get("/instantbookdata",(req,res)=>{
-  
-  let qry39="select  max(slot_id) as latest_id from tbl_slotbooking"
+app.get("/instantbookdata", (req, res) => {
+  let qry39 = "select  max(slot_id) as latest_id from tbl_slotbooking";
   db.query(qry39, (err, result) => {
     console.log(qry39);
     if (err) {
       console.log("Error");
     } else {
       console.log(result);
-      res.send({booking_Id:result[0].latest_id });
+      res.send({ booking_Id: result[0].latest_id });
     }
   });
-})
-app.post("/setbooking/:id",(req,res)=>{
-  let bid= req.params.id;
+});
+app.post("/setbooking/:id", (req, res) => {
+  let bid = req.params.id;
   console.log(bid);
-  let qry40="update tbl_slotbooking set slot_status=1 where slot_id="+bid;
+  let qry40 = "update tbl_slotbooking set slot_status=1 where slot_id=" + bid;
   console.log(qry40);
   db.query(qry40, (err, result) => {
     console.log(qry40);
     if (err) {
       console.log("Error");
     } else {
-      res.send({message:"PAYMENT SUCESS" });
+      res.send({ message: "PAYMENT SUCESS" });
     }
   });
-
-})
-app.get("/billdata/:id",(req,res)=>{
-  let id=req.params.id
-  let qry41="select * from tbl_slotbooking s inner join  tbl_owner o  on s.owner_id=o.owner_id inner join  tbl_chargingstation c on c.station_id=s.station_id where s.slot_id=" +id;
+});
+app.get("/billdata/:id", (req, res) => {
+  let id = req.params.id;
+  let qry41 =
+    "select * from tbl_slotbooking s inner join  tbl_owner o  on s.owner_id=o.owner_id inner join  tbl_chargingstation c on c.station_id=s.station_id where s.slot_id=" +
+    id;
   db.query(qry41, (err, result) => {
     console.log(qry41);
     if (err) {
       console.log("Error");
     } else {
-      res.send({billdata:result });
+      res.send({ billdata: result });
     }
   });
-})
-app.post("/offlinedata",(req,res)=>{
-  let qry42="insert into tbl_offline(customer_name,customer_phone,customer_email,offline_date,offline_time,station_id,Customer_usage)values('"+req.body.Customer_name+"','"+req.body.Customer_phone+"','"+req.body.Customer_email+"','"+req.body.Customer_Date+"','"+req.body.Customer_Time+"','"+req.body.Customer_Date+"','"+req.body.Station_id+"','"+req.body.Customer_Charge+"')";
+});
+app.post("/offlinedata", (req, res) => {
+  let qry42 =
+    "insert into tbl_offline(customer_name,customer_phone,customer_email,offline_date,offline_time,station_id,Customer_usage)values('" +
+    req.body.Customer_name +
+    "','" +
+    req.body.Customer_phone +
+    "','" +
+    req.body.Customer_email +
+    "','" +
+    req.body.Customer_Date +
+    "','" +
+    req.body.Customer_Time +
+    "','" +
+    req.body.Customer_Date +
+    "','" +
+    req.body.Station_id +
+    "','" +
+    req.body.Customer_Charge +
+    "')";
   db.query(qry42, (err, result) => {
     console.log(qry42);
     if (err) {
       console.log("Error");
     } else {
-      res.send({message :"Sucessfully Added" });
+      res.send({ message: "Sucessfully Added" });
     }
   });
-})
-app.post("/Chargeusage",(req,res)=>{
-  
-  let qry43="update tbl_slotbooking set slot_usage='"+req.body.usage+"' where station_id="+req.body.sid
+});
+app.post("/Chargeusage", (req, res) => {
+  let qry43 =
+    "update tbl_slotbooking set slot_usage='" +
+    req.body.usage +
+    "',slot_status='" +
+    req.body.status +
+    "' where slot_id=" +
+    req.body.sid;
   db.query(qry43, (err, result) => {
     console.log(qry43);
     if (err) {
       console.log("Error");
     } else {
-      res.send({message :"Sucessfully Added" });
+      res.send({ message: "Sucessfully Added" });
+      let qry45 =
+        "select * from tbl_slotbooking s inner join  tbl_owner o on s.owner_id=o.owner_id ";
+      db.query(qry45, (err, result1) => {
+        console.log(qry45);
+        if (err) {
+          console.log("Error");
+        } else {
+          let balance = result1[0].owner_balance;
+          let used = req.body.usage;
+          let currentbalance = balance - used;
+
+          let qry46 =
+            "update tbl_owner set owner_balance='" +
+            currentbalance +
+            "' where owner_id=" +
+            result1[0].owner_id;
+          db.query(qry46, (err, result) => {
+            console.log(qry46);
+            if (err) {
+              console.log("Error");
+            } else {
+              console.log("Charging Finished");
+              res.send({ message: "Charging Finished" });
+            }
+          });
+        }
+      });
     }
   });
-})
+});
+app.post("/changeslotstatus/:id", (req, res) => {
+  let qry44 =
+    "update tbl_slotbooking set slot_status=1 where owner_id=" + req.params.id;
+  db.query(qry44, (err, result) => {
+    console.log(qry44);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ message: "Charging Finished" });
+    }
+  });
+});
