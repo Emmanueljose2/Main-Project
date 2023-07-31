@@ -7,7 +7,9 @@ import { Row, Col } from "reactstrap";
 import "../style/form.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Registration = () => {
+  const navigate=useNavigate()
   const [name, setName] = useState("");
   const [placeData,setPlaceData]=useState([])
   const [districtData, setDistrictData] = useState([]);
@@ -31,9 +33,15 @@ const Registration = () => {
     frm.append("location_id", location)
     axios
       .post("http://localhost:4000/OwnerRegistor", frm)
-      .then((response) => {
-        //getData()
-        //console.log(response);
+      .then((response) => response.data).then((data)=>{
+        if(data.message=="Datasaved"){
+          alert("Registration Sucess")
+          navigate('/login')
+        }
+        else
+        {
+          alert("Vehicle Owner Registration Failed")
+        }
       });
   };
   const getData = () => {

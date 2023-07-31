@@ -7,7 +7,9 @@ import { Row, Col } from "reactstrap";
 import "../style/form.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Registration = () => {
+  const navigate=useNavigate()
   const [firstname, setFirstName] = useState("");
   const [district, setDistrict] = useState("");
   const [districtData, setDistrictData] = useState([]);
@@ -36,8 +38,15 @@ const Registration = () => {
     frm.append("slot_count", slotcount)
     axios
       .post("http://localhost:4000/StationRegistor", frm)
-      .then((response) => {
-        //getData()
+      .then((response) => response.data).then((data)=>{
+        if(data.message=="Datasaved"){
+          alert("Registration Sucess")
+          navigate('/login')
+        }
+        else
+        {
+          alert("Station Registration Failed")
+        }
       });
   };
   useEffect(() => {

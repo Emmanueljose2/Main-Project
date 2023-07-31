@@ -118,9 +118,9 @@ export const Myprofile = () => {
       </Grid>
       <Grid xs={4}></Grid>
       <Grid xs={6}>
-        <button className="button1 btn" onClick={handleOpen}>
+        <Button className="button1 btn" onClick={handleOpen}>
           Edit profile
-        </button>
+        </Button>
         <Modal
           open={open}
           onClose={handleClose}

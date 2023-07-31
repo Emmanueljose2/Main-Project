@@ -9,3 +9,7 @@
     justify-content: space-evenly;
 
 }
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+}

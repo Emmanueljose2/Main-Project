@@ -269,11 +269,12 @@ app.post(
       "')";
     //console.log(qry20);
     db.query(qry20, (err, result) => {
+      console.log(qry20);
       if (err) {
         console.log("Error");
       } else {
         res.send({
-          message: "Data saved",
+          message: "Datasaved",
         });
       }
     });
@@ -311,7 +312,7 @@ app.post(
         console.log("Error");
       } else {
         res.send({
-          message: "Data saved",
+          message: "Datasaved",
         });
       }
     });
@@ -525,8 +526,9 @@ app.post("/updateuserpassword/:id", (req, res) => {
 });
 app.get("/stationdata/:id", (req, res) => {
   let qry25 =
-    "select * from tbl_chargingstation where location_id=" + req.params.id;
+    "select * from tbl_chargingstation where location_id=" + req.params.id+" AND station_status=1" ;
   db.query(qry25, (err, result) => {
+    console.log(qry25);
     if (err) {
       console.log("Error");
     } else {
@@ -935,7 +937,7 @@ app.get("/bookstation/:sid/:uid", (req, res) => {
   });
 });
 app.get("/Allstationdata", (req, res) => {
-  let qry49 = "select * from tbl_chargingstation";
+  let qry49 = "select * from tbl_chargingstation where station_status=0";
   db.query(qry49, (err, result) => {
     if (err) {
       console.log("Error");
@@ -944,3 +946,14 @@ app.get("/Allstationdata", (req, res) => {
     }
   });
 });
+app.post("/Verification/:id",(req,res)=>{
+  let qry50="update tbl_chargingstation set station_status=1 where station_id="+req.params.id
+  db.query(qry50, (err, result) => {
+    console.log(qry50);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ message:"Station Verified" });
+    }
+  });
+})
