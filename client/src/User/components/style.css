@@ -163,5 +163,13 @@ select {
   font-size: 12px;
   color: #777;
 }
+.finish {
+  display: flex;
+  justify-content: space-around;
+}
+.bor{
+border: 1px solid black;
+border-radius: 5px;
+}
 
   

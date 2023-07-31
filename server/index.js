@@ -919,6 +919,18 @@ app.post("/changeslotstatus/:id/:slid", (req, res) => {
     }
   });
 });
+app.post("/changeslotstatus1/:id/:slid", (req, res) => {
+  let qry44 =
+    "update tbl_slotbooking set slot_status=2 where owner_id=" + req.params.id+" and slot_id="+req.params.slid;
+  db.query(qry44, (err, result) => {
+    console.log(qry44);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ message: "Charging Finished" });
+    }
+  });
+});
 app.get("/bookstation/:sid/:uid", (req, res) => {
   let qry47 =
     "SELECT * FROM tbl_owner o inner join tbl_packagebooking b on b.owner_id=o.owner_id where b.owner_id ="+req.params.uid ;

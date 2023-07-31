@@ -16,7 +16,7 @@ const Slot = () => {
       const dat={
         usage:value,
         sid:e,
-        status:2
+        status:3
        }
         axios.post(`http://localhost:4000/Chargeusage`,dat).then((response)=>response.data).then((data)=>{
             alert(data.message)
@@ -51,14 +51,17 @@ const Slot = () => {
         
         <td>{d.slot_status===0 && (
             <button
-            className='btn btn-primary disabled'  >Finish</button>
+            className='btn btn-primary disabled'  >Not Started</button>
         )}
         {d.slot_status===1 && (
             <button
-            className='btn btn-primary'  onClick={()=>setUsage(d.slot_id)}>Finish</button>
+            className='btn btn-primary disabled'  >Charging</button>
         )}
         {d.slot_status==2&&(
-            d.slot_usage
+           <button className='btn btn-primary '  onClick={()=>setUsage(d.slot_id)}>Finish</button>
+        )}
+        {d.slot_status==3&&(
+           d.slot_usage
         )}
         </td>
         
