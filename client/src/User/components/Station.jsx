@@ -25,9 +25,10 @@ export const Station = () => {
    
     axios.get(`http://localhost:4000/bookstation/${id}/${user_id}`).then((response) => response.data)
     .then((data) => {
-      setBookData(data.PackageData);
+      setBookData(data.PackageData[0]);
     });
   }
+  console.log(bookData);
   const Subscribe=()=>{
     navigate('../Package')
 
@@ -78,7 +79,7 @@ export const Station = () => {
             </div>
             <div className="package">
               {bookData==false &&(<button className="btn btn-primary" onClick={()=>Subscribe()}>Subscribe</button>)}
-              {bookData!=false &&(<button className="btn btn-primary" onClick={()=>Book(bookData[0].package_id)}>Book</button>)}
+              {bookData!=false &&(<button className="btn btn-primary" onClick={()=>Book(bookData.package_id)}>Book</button>)}
 
             </div>
           </div>

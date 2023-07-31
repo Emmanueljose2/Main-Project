@@ -597,12 +597,14 @@ app.post("/Bookdata", (req, res) => {
     "','" +
     req.body.user_id +
     "')";
+    console.log("Insert Query: " + qry29);
   db.query(qry29, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
       let qry31 =
         "select * from tbl_packagebooking p INNER JOIN tbl_package pk on p.package_id=pk.package_id where booking_id=(select max(booking_id) as latest_booking_id from tbl_packagebooking)";
+        console.log("Select Query: " + qry31);
       db.query(qry31, (err, result) => {
         if (err) {
           console.log("Error");
@@ -677,37 +679,37 @@ app.post("/setdata", (req, res) => {
     }
   });
 });
-// app.post("/slotdata", (req, res) => {
-//   let qry32 =
-//     "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id)values('" +
-//     req.body.Date +
-//     "','" +
-//     req.body.Time +
-//     "','" +
-//     req.body.user_id +
-//     "','" +
-//     req.body.station_id +
-//     "','" +
-//     req.body.package_id +
-//     "')";
-//   db.query(qry32, (err, result) => {
-//     console.log(qry32);
-//     if (err) {
-//       console.log("Error");
-//     } else {
-//       res.send({ message: "data saved" });
-//     }
-//   });
-// });
+app.post("/slotdata", (req, res) => {
+  let qry32 =
+    "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id)values('" +
+    req.body.Date +
+    "','" +
+    req.body.Time +
+    "','" +
+    req.body.user_id +
+    "','" +
+    req.body.station_id +
+    "','" +
+    req.body.package_id +
+    "')";
+  db.query(qry32, (err, result) => {
+    console.log(qry32);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ message: "Booking Completed" });
+    }
+  });
+});
 app.get("/slot/:id", (req, res) => {
   let qry33 =
     "select * from tbl_slotbooking s inner join tbl_chargingstation c on s.station_id=c.station_id inner join tbl_package p on s.package_id=p.package_id where owner_id=" +
     req.params.id;
 
   db.query(qry33, (err, result) => {
-    console.log(qry33);
+    console.log(qry33);  
     if (err) {
-      console.log("Error");
+      console.log("Error"); 
     } else {
       res.send({ slot: result });
     }
@@ -726,62 +728,62 @@ app.get("/slotuser/:id", (req, res) => {
     }
   });
 });
-app.post("/slotdata", (req, res) => {
-  let qry37 =
-    "select slot_count as sl_count  from tbl_chargingstation where station_id=" +
-    req.body.station_id;
-  db.query(qry37, (err, result) => {
-    if (err) {
-      console.log("Error");
-    } else {
-      var slot_count = result[0].sl_count;
-      let qry38 =
-        "SELECT COUNT(*) AS `active_slot`FROM (SELECT `slot_id`, `slot_date`, `slot_time`, `owner_id`, `station_id`, `package_id`, `slot_status`, `slot_duration`, TIME_FORMAT(CONCAT(`slot_date`, ' ', `slot_time`), '%H:%i') AS `start_time`, TIME_FORMAT(ADDTIME(CONCAT(`slot_date`, ' ', `slot_time`), SEC_TO_TIME(`slot_duration`*60)), '%H:%i') AS `end_time` FROM `tbl_slotbooking` WHERE `slot_date` = '" +
-        req.body.book_Date +
-        "' AND `station_id` = 4 HAVING `start_time` <= '" +
-        req.body.book_Time +
-        "' AND `end_time` >= '" +
-        req.body.book_Time +
-        "') AS subquery";
-      db.query(qry38, (err, result) => {
-        if (err) {
-          console.log("Error");
-        } else {
-          console.log("Slot Count" + slot_count);
-          if (result[0].active_slot < slot_count) {
-            //Book SLots
-            let qry34 =
-              "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id,slot_duration,slot_status)values('" +
-              req.body.book_Date +
-              "','" +
-              req.body.book_Time +
-              "','" +
-              req.body.owner_id +
-              "','" +
-              req.body.station_id +
-              "'," +
-              packageid +
-              ",'" +
-              req.body.book_Duration +
-              "',1)";
-            db.query(qry34, (err, result) => {
-              console.log(qry34);
-              if (err) {
-                console.log("Error");
-              } else {
-                res.send({ message: "Slot Booking Completed" });
-              }
-            });
-          } else {
-            res.send({
-              message: "No slots available",
-            });
-          }
-        }
-      });
-    }
-  });
-});
+// app.post("/slotdata", (req, res) => {
+//   let qry37 =
+//     "select slot_count as sl_count  from tbl_chargingstation where station_id=" +
+//     req.body.station_id;
+//   db.query(qry37, (err, result) => {
+//     if (err) {
+//       console.log("Error");
+//     } else {
+//       var slot_count = result[0].sl_count;
+//       let qry38 =
+//         "SELECT COUNT(*) AS `active_slot`FROM (SELECT `slot_id`, `slot_date`, `slot_time`, `owner_id`, `station_id`, `package_id`, `slot_status`, `slot_duration`, TIME_FORMAT(CONCAT(`slot_date`, ' ', `slot_time`), '%H:%i') AS `start_time`, TIME_FORMAT(ADDTIME(CONCAT(`slot_date`, ' ', `slot_time`), SEC_TO_TIME(`slot_duration`*60)), '%H:%i') AS `end_time` FROM `tbl_slotbooking` WHERE `slot_date` = '" +
+//         req.body.book_Date +
+//         "' AND `station_id` = 4 HAVING `start_time` <= '" +
+//         req.body.book_Time +
+//         "' AND `end_time` >= '" +
+//         req.body.book_Time +
+//         "') AS subquery";
+//       db.query(qry38, (err, result) => {
+//         if (err) {
+//           console.log("Error");
+//         } else {
+//           console.log("Slot Count" + slot_count);
+//           if (result[0].active_slot < slot_count) {
+//             //Book SLots
+//             let qry34 =
+//               "insert into tbl_slotbooking(slot_date,slot_time,owner_id,station_id,package_id,slot_duration,slot_status)values('" +
+//               req.body.book_Date +
+//               "','" +
+//               req.body.book_Time +
+//               "','" +
+//               req.body.owner_id +
+//               "','" +
+//               req.body.station_id +
+//               "'," +
+//               packageid +
+//               ",'" +
+//               req.body.book_Duration +
+//               "',1)";
+//             db.query(qry34, (err, result) => {
+//               console.log(qry34);
+//               if (err) {
+//                 console.log("Error");
+//               } else {
+//                 res.send({ message: "Slot Booking Completed" });
+//               }
+//             });
+//           } else {
+//             res.send({
+//               message: "No slots available",
+//             });
+//           }
+//         }
+//       });
+//     }
+//   });
+// });
 app.get("/instantbookdata", (req, res) => {
   let qry39 = "select  max(slot_id) as latest_id from tbl_slotbooking";
   db.query(qry39, (err, result) => {
@@ -864,7 +866,6 @@ app.post("/Chargeusage", (req, res) => {
     if (err) {
       console.log("Error");
     } else {
-      res.send({ message: "Sucessfully Added" });
       let qry45 =
         "select * from tbl_slotbooking s inner join tbl_owner o on s.owner_id=o.owner_id where slot_id=" +
         slid;
@@ -887,8 +888,8 @@ app.post("/Chargeusage", (req, res) => {
                 let qry48 =
                   "update tbl_owner set Package_status=0 where owner_id=" +
                   result1[0].owner_id;
-                  console.log(qry48);
-                db.query(qry48, (err, result) => {
+                console.log(qry48);
+                db.query(qry48, (err, result2) => {
                   if (err) {
                     console.log("Error");
                   } else {
@@ -903,9 +904,10 @@ app.post("/Chargeusage", (req, res) => {
     }
   });
 });
-app.post("/changeslotstatus/:id", (req, res) => {
+
+app.post("/changeslotstatus/:id/:slid", (req, res) => {
   let qry44 =
-    "update tbl_slotbooking set slot_status=1 where owner_id=" + req.params.id;
+    "update tbl_slotbooking set slot_status=1 where owner_id=" + req.params.id+" and slot_id="+req.params.slid;
   db.query(qry44, (err, result) => {
     console.log(qry44);
     if (err) {
@@ -917,21 +919,28 @@ app.post("/changeslotstatus/:id", (req, res) => {
 });
 app.get("/bookstation/:sid/:uid", (req, res) => {
   let qry47 =
-    "SELECT * FROM tbl_packagebooking b inner join tbl_package p on b.package_id=p.package_id inner join tbl_owner o on o.owner_id=b.owner_id WHERE station_id =" +
-    req.params.sid +
-    " AND b.owner_id =" +
-    req.params.uid +
-    " AND booking_status = 1  ";
-  console.log(qry47);
+    "SELECT * FROM tbl_owner o inner join tbl_packagebooking b on b.owner_id=o.owner_id where b.owner_id ="+req.params.uid ;
+    console.log(qry47);
   db.query(qry47, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      if (result.length > 0) {
+      console.log(result);
+      if (result[0].Package_status > 0) {
         res.send({ PackageData: result });
       } else {
         res.send({ PackageData: false });
       }
+    }
+  });
+});
+app.get("/Allstationdata", (req, res) => {
+  let qry49 = "select * from tbl_chargingstation";
+  db.query(qry49, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ station: result });
     }
   });
 });

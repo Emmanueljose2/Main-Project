@@ -26,6 +26,10 @@ export default function Bookslip () {
         <div className="ticket-header">Electric Charging Station</div>
         <div className="ticket-info">
           <div className="ticket-item">
+            <span>Booking id</span>
+            <span id="station-name">{billdata.slot_id}</span>
+          </div>
+          <div className="ticket-item">
             <span>Station Name:</span>
             <span id="station-name">{billdata.station_name}</span>
           </div>
@@ -34,18 +38,19 @@ export default function Bookslip () {
             <span id="station-location">{billdata.station_adress}</span>
           </div>
           <div className="ticket-item">
-            <span>Booked Time:</span>
+            <span>Booked Date:</span>
             <span id="booked-time">{billdata.slot_date}</span>
           </div>
           <div className="ticket-item">
-            <span>Amount:</span>
-            <span id="amount">$20.00</span>
+            <span>Booked Time:</span>
+            <span id="booked-time">{billdata.slot_time}</span>
+          </div>
+          <div className="ticket-item">
+            <span>Usage(Kilowatts):</span>
+            <span id="amount">{billdata.slot_usage}</span>
           </div>
         </div>
-        <div className="ticket-total">
-          <span>Total Amount:</span>
-          <span id="total-amount">$20.00</span>
-        </div>
+        
             <Link to="/user/Home">
         <div><button className="btn btn-primary">Home</button></div>
         </Link>

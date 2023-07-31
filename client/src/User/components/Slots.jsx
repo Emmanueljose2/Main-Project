@@ -1,17 +1,18 @@
 import React from 'react'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
+import { Link } from "react-router-dom";
 const Slots = () => {
     const id=sessionStorage.getItem("uid")
     const [slotdata, setSlotdata] = useState([]);
   const  FetchSlotdata= ()=>{
         axios.get(`http://localhost:4000/slot/${id}`).then((response) => response.data)
         .then((data) => {
-         setSlotdata(data.slot[0])
+         setSlotdata(data.slot)
         });
     }
-    const changeStatus=()=>{
-        axios.post(`http://localhost:4000/changeslotstatus/${id}`).then((response) =>response.data).then((data)=>{
+    const changeStatus=(e)=>{
+        axios.post(`http://localhost:4000/changeslotstatus/${id}/${e}`).then((response) =>response.data).then((data)=>{
             // alert(data.message)
         FetchSlotdata();
 
@@ -24,37 +25,42 @@ const Slots = () => {
 
   return (
     <div><table className='custom'>
-        <tr>
-            <th>
-                Station Name
-            </th>
-            <th>
-                Booking Time
-            </th>
-            <th>
-                Booking Date
-            </th>
-            <th>
-                Package Name
-            </th>
-            <th>
-                Action
-            </th>
-        </tr>
-            <tr>
-            <td>{slotdata.station_name}</td>
-            <td>{slotdata.slot_time}</td>
-            <td>{slotdata.slot_date}</td>
-            <td>{slotdata.package_name}</td>
-            <td>{slotdata.slot_status==0 && (
-                <button className='btn btn primary' onClick={()=>changeStatus()}>Finish</button>
+    <thead>
+      <tr>
+        <th>Station Name</th>
+        <th>Booking Time</th>
+        <th>Booking Date</th>
+        <th>Package Name</th>
+        <th>Action</th>
+        <th>Book Slip</th>
+      </tr>
+    </thead>
+    <tbody>
+      {slotdata.map((d, key) => (
+        <tr key={key}>
+          <td>{d.station_name}</td>
+          <td>{d.slot_time}</td>
+          <td>{d.slot_date}</td>
+          <td>{d.package_name}</td>
+          <td>
+            {d.slot_status === 0 && (
+              <button className='btn btn-primary' onClick={() => changeStatus(d.slot_id)}>
+                Finish
+              </button>
             )}
-            {slotdata.slot_status===1 &&(<button className='btn btn primary disabled'>Finished</button>)}
-            {slotdata.slot_status===2&&(slotdata.slot_usage)}</td>
-            </tr>
-            
-        
-        </table></div>
+            {d.slot_status === 1 && <button className='btn btn-primary disabled'>Finished</button>}
+            {d.slot_status === 2 && d.slot_usage}
+          </td>
+          <Link to={`../bookslip/${d.slot_id}`}>
+          <td>{d.slot_usage==0 && <button className='btn btn-primary'>Booking Slip</button>}
+          {d.slot_usage!=0 && <button className='btn btn-primary'>Charging Bill</button>}</td>
+
+          </Link>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  </div>
   )
 }
 

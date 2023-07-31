@@ -8,7 +8,7 @@ const Slot = () => {
         axios.get(`http://localhost:4000/slotuser/${id}`)
         .then((response) => response.data)
         .then((data) => {
-         setSlotdata(data.slot[0])
+         setSlotdata(data.slot)
         });
     }
     const setUsage=(e)=>{
@@ -43,26 +43,27 @@ const Slot = () => {
             Finish
         </th>
     </tr>
-        <tr>
-        <td>{slot.owner_name}</td>
-        <td>{slot.slot_time}</td>
-        <td>{slot.slot_date}</td>
+        {slot.map((d,key)=>(<tr key={key}>
+        <td>{d.owner_name}</td>
+        <td>{d.slot_time}</td>
+        <td>{d.slot_date}</td>
         
         
-        <td>{slot.slot_status===0 && (
+        <td>{d.slot_status===0 && (
             <button
             className='btn btn-primary disabled'  >Finish</button>
         )}
-        {slot.slot_status===1 && (
+        {d.slot_status===1 && (
             <button
-            className='btn btn-primary'  onClick={()=>setUsage(slot.slot_id)}>Finish</button>
+            className='btn btn-primary'  onClick={()=>setUsage(d.slot_id)}>Finish</button>
         )}
-        {slot.slot_status==2&&(
-            slot.slot_usage
+        {d.slot_status==2&&(
+            d.slot_usage
         )}
         </td>
         
-        </tr>
+        </tr>))}
+        
         
     
     </table></div>

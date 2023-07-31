@@ -1,8 +1,9 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams,useNavigate } from 'react-router-dom'
 import axios from "axios";
 import  { useEffect, useState } from "react";
 const Slotbooking = () => {
+  const navigate=useNavigate()
   const [stationData, setStationData] = useState([]);
   const [Time, setTime] = useState("");
   const [Date, setDate] = useState("");
@@ -35,7 +36,8 @@ const Slotbooking = () => {
     axios.post(`http://localhost:4000/slotdata`,dat).then((response) => response.data)
     .then((data) => {
       
-            
+          alert(data.message)
+        navigate('/user/slots')
     });
   }
   useEffect(() => {
