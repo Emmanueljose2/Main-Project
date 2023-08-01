@@ -970,13 +970,35 @@ app.post("/Verification/:id",(req,res)=>{
   });
 })
 app.post("/Complaint",(req,res)=>{
-  let qry51="insert into tbl_complaint(complaint_content,complaint_title,complaint_date) values('"+req.body.content+"','"+req.body.title+"',curdate())"
+  let qry51="insert into tbl_complaint(complaint_content,complaint_title,complaint_date,owner_id) values('"+req.body.content+"','"+req.body.title+"',curdate(),'"+req.body.owner_id+"')"
   db.query(qry51, (err, result) => {
     console.log(qry51);
     if (err) {
       console.log("Error");
     } else {
       res.send({ message:"complaint added" });
+    }
+  });
+})
+app.get("/Complaintdata",(req,res)=>{
+  let qry52="select * from tbl_complaint c inner join tbl_owner o on c.owner_id=o.owner_id "
+  db.query(qry52, (err, result) => {
+    
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ result:result });
+    }
+  });
+})
+app.post("/ComplaintReply",(req,res)=>{
+  let qry53="update tbl_complaint set complaint_reply='"+req.body.reply+"',complaint_status=1 where complaint_id="+req.body.User_id
+  db.query(qry53, (err, result) => {
+  console.log(qry53);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ result:"Replayed Scueessfully" });
     }
   });
 })

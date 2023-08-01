@@ -13,3 +13,13 @@
     display: flex;
     justify-content: space-around;
 }
+.complaint_tbl{
+    background-color: antiquewhite;
+}
+.reply {
+    display: flex;
+}
+.reply1 {
+    display: flex;
+    justify-content: space-around;
+}
