@@ -969,3 +969,14 @@ app.post("/Verification/:id",(req,res)=>{
     }
   });
 })
+app.post("/Complaint",(req,res)=>{
+  let qry51="insert into tbl_complaint(complaint_content,complaint_title,complaint_date) values('"+req.body.content+"','"+req.body.title+"',curdate())"
+  db.query(qry51, (err, result) => {
+    console.log(qry51);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ message:"complaint added" });
+    }
+  });
+})

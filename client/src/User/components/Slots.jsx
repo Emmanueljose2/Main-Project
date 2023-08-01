@@ -6,6 +6,7 @@ import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 const style = {
   position: "absolute",
@@ -24,9 +25,11 @@ const Slots = () => {
   const id = sessionStorage.getItem("uid");
   const [slotdata, setSlotdata] = useState([]);
   const [open, setOpen] = React.useState(false);
-
+  const [complaint,setComplaint]=useState("")
+  const [Title,setTitle]=useState("")
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
   const FetchSlotdata = () => {
     axios
       .get(`http://localhost:4000/slot/${id}`)
@@ -53,6 +56,18 @@ const Slots = () => {
         FetchSlotdata();
       });
   };
+  const ComplaintData=()=>{
+    const dat={
+      title:Title,
+      content:complaint,
+      owner_id:id,
+    }
+    axios.post(`http://localhost:4000/Complaint`,dat).then((response)=>response.data).then((data)=>{
+      alert(data.message);
+     handleClose()
+     
+    })
+  }
   useEffect(() => {
     FetchSlotdata();
   }, []);
@@ -142,21 +157,21 @@ const Slots = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <h2>Complaint Box</h2>
             <div>
-            <input type="text" name="Title"  placeholder="Title" className="bor"/></div>
-          </Typography>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <input type="text" name="Title" onChange={(e) => {
+                setTitle(e.target.value);
+              }} placeholder="Title" className="bor"/></div>
             <textarea
               id="adress"
               name="w3review"
               rows="4"
               cols="30"
               onChange={(e) => {
-                // setAdress(e.target.value);
+                setComplaint(e.target.value);
               }}
             ></textarea>
             <div className="finish">
               {" "}
-              <button className="btn btn-primary">Submit</button>
+              <button className="btn btn-primary" onClick={()=>ComplaintData()}>Submit</button>
               <button className="btn btn-primary" onClick={handleClose}>Close</button>
             </div>
           </Typography>

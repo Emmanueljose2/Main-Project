@@ -7,6 +7,7 @@ import Settings from "../pages/Settings";
 import District from "../pages/District";
 import Location from "../pages/Location";
 import Verification from "../pages/Verification";
+import Complaint from "../pages/Complaint";
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
       <Route path="/Location" element={<Location />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/verification" element={<Verification />} />
+      <Route path="/complaint" element={<Complaint />} />
     </Routes>
   );
 };

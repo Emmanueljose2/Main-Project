@@ -29,6 +29,12 @@ const navLinks = [
     icon: "ri-settings-2-line",
     display: "Settings",
   },
+  {
+    path: "/Admin/complaint",
+    icon: "ri-feedback-line",
+    display: "Complaint",
+  },
+
   
 ];
 
