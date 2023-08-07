@@ -51,7 +51,7 @@ const Complaint = () => {
   };
   useEffect(() => {
     ComplaintData();
-  });
+  },[]);
   return (
     <div className="title">
       <TableContainer className="complaint_tbl">
@@ -95,6 +95,9 @@ const Complaint = () => {
             background: "white",
             padding: "20px",
             outline: "none",
+            height:'300px',
+            width:'300px',
+            borderRadius:'5px'
           }}
         >
           {selectedComplaint && (
@@ -104,7 +107,7 @@ const Complaint = () => {
               <div className="reply">
                 {" "}
                 <label>Reply</label>
-                
+                {selectedComplaint.complaint_status === 0?
                 <textarea
                   id="adress"
                   name="w3review"
@@ -113,7 +116,7 @@ const Complaint = () => {
                   onChange={(e) => {
                     setReply(e.target.value);
                   }}
-                ></textarea>
+                ></textarea>:<p>{selectedComplaint.complaint_reply}</p>}
               </div>
             </>
           )}

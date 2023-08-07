@@ -171,5 +171,26 @@ select {
 border: 1px solid black;
 border-radius: 5px;
 }
+/* complaintTable.css */
+.table-container {
+  border: 1px solid #ccc;
+}
+
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.table-container th {
+  font-weight: bold;
+}
+
 
   

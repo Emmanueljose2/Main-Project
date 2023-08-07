@@ -49,6 +49,9 @@ export default function Search() {
         
       });
   };
+  // const Activeslot =()=>{
+  //   axios.get(`http://localhost:4000/Activeslot/${e}`)
+  // }
 
   useEffect(() => {
     getData();

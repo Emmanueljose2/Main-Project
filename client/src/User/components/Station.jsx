@@ -9,10 +9,11 @@ export const Station = () => {
   const { id } = useParams();
   const [stationData, setStationData] = useState([]);
   const [bookData,setBookData]=useState([])
+  const [Active,setActiveslot]=useState([])
   const navigate = useNavigate();
   const getStationData = () => {
     const e = localStorage.getItem("sessionId");
-    console.log(e);
+    
 
     axios
       .get(`http://localhost:4000/stationdetails/${id}`)
@@ -28,7 +29,7 @@ export const Station = () => {
       setBookData(data.PackageData[0]);
     });
   }
-  console.log(bookData);
+  
   const Subscribe=()=>{
     navigate('../Package')
 
@@ -37,9 +38,17 @@ export const Station = () => {
     navigate(`/user/slotbooking/${id}/${e}`)
 
   }
+  const Activeslot=()=>{
+    axios.get(`http://localhost:4000/Activeslot/${id}`).then((response)=>response.data).then((data)=>{
+    setActiveslot(data.result[0].total)
+    console.log(data.result[0].total);
+    })
+  }
   useEffect(() => {
+    Activeslot()
     getStationData();
     bookStation();
+   
   }, []);
 
 
@@ -75,7 +84,7 @@ export const Station = () => {
             </div>
             <div>
               <label className="station">Slot count:</label>
-              <label className="data">{d.slot_count}</label>
+              <label className="data">{d.slot_count-Active}</label>
             </div>
             <div className="package">
               {bookData==false &&(<button className="btn btn-primary" onClick={()=>Subscribe()}>Subscribe</button>)}

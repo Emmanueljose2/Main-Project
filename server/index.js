@@ -1002,3 +1002,27 @@ app.post("/ComplaintReply",(req,res)=>{
     }
   });
 })
+app.get("/ComplaintUserdata/:id",(req,res)=>{
+  let qry54="select * from tbl_complaint where owner_id="+req.params.id
+  db.query(qry54, (err, result) => {
+    console.log(qry54);
+      if (err) {
+        console.log("Error");
+      } else {
+        res.send({ result:result});
+      }
+    });
+
+})
+app.get("/Activeslot/:id",(req,res)=>{
+  let qry55="SELECT COUNT(*) AS total FROM tbl_slotbooking WHERE station_id="+req.params.id+" AND slot_status=1"
+  db.query(qry55, (err, result) => {
+    console.log(qry55);
+      if (err) {
+        console.log("Error");
+      } else {
+        res.send({ result:result});
+      }
+    });
+
+})

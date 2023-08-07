@@ -14,6 +14,7 @@ import Slotbooking from "../../components/Slotbooking";
 import Slots from "../../components/Slots";
 import Bookslip from "../../components/bookslip";
 import Instantslot from '../../../User/components/Instantslot';
+import Complainthistory from "../../components/Complainthistory";
 export const Pages = () => {
   return (
     <>
@@ -33,6 +34,7 @@ export const Pages = () => {
         <Route path="/slots" element={< Slots/>} />
         <Route path="/instantslot/:id" element={<Instantslot/>}/>
         <Route path="/bookslip/:id" element={<Bookslip/>}/>
+        <Route path="/ComplaintHistory" element={<Complainthistory/>}/>
         
 
       </Routes>

@@ -1,5 +1,6 @@
 import { FcCheckmark } from "react-icons/fc";
 import { AiOutlineClose } from "react-icons/ai";
+
 export const navlist = [
   {
     text: "home",
@@ -10,16 +11,18 @@ export const navlist = [
     path: "/User/Myprofile",
   },
 
-  {
-    text: "LogOut",
-    path: "/contact",
-  },
+  
   { text: "Package Booking", 
     path: "/User/PackageDetails" },
     {
       text:"Slot Booking",
       path:"/User/slots"
-    }
+    },
+    {
+      text: "LogOut",
+      path: "/contact",
+    },
+    
 ];
 export const hero = [
   {
