@@ -34,6 +34,11 @@ const navLinks = [
     icon: "ri-feedback-line",
     display: "Complaint",
   },
+  {
+    path: "/Admin/feedback",
+    icon: "ri-feedback-line",
+    display: "Feedbacks",
+  },
 
   
 ];

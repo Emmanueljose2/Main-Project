@@ -19,7 +19,6 @@ import "../style/form.css";
       password:password
     }
     axios.post("http://localhost:4000/login", dat).then((response) => {
-
     if (response.data.login === "admin") {
       sessionStorage.setItem("aid", response.data.id);
       navigate("/Admin/");

@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -8,9 +9,22 @@ import {
   Area,
 } from "recharts";
 
-import carStaticsData from "../assets/dummy-data/carStatics";
+
 
 const CarStatsChart = () => {
+
+  const [carStaticsData, setCarStaticsData] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/DayStat")
+      .then((response) => response.data)
+      .then((data) => {
+        setCarStaticsData(
+          []
+        );
+      });
+  }, []);
   return (
     <ResponsiveContainer width="100%">
       <AreaChart
@@ -31,13 +45,6 @@ const CarStatsChart = () => {
 
         <CartesianGrid strokeDasharray="0" stroke="#b7ffe913" />
         <Tooltip wrapperClassName="tooltip__style" cursor={false} />
-        <Area
-          type="monotone"
-          dataKey="week"
-          stroke="#8884d8"
-          fillOpacity={1}
-          fill="url(#colorUv)"
-        />
         <Area
           type="monotone"
           dataKey="prevWeek"

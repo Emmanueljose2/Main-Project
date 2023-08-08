@@ -8,6 +8,7 @@ import District from "../pages/District";
 import Location from "../pages/Location";
 import Verification from "../pages/Verification";
 import Complaint from "../pages/Complaint";
+import ViewFeedback from "../pages/ViewFeedback"
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
       <Route path="/settings" element={<Settings />} />
       <Route path="/verification" element={<Verification />} />
       <Route path="/complaint" element={<Complaint />} />
+      <Route path="/feedback" element={<ViewFeedback />} />
     </Routes>
   );
 };

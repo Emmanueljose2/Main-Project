@@ -526,7 +526,9 @@ app.post("/updateuserpassword/:id", (req, res) => {
 });
 app.get("/stationdata/:id", (req, res) => {
   let qry25 =
-    "select * from tbl_chargingstation where location_id=" + req.params.id+" AND station_status=1" ;
+    "select * from tbl_chargingstation where location_id=" +
+    req.params.id +
+    " AND station_status=1";
   db.query(qry25, (err, result) => {
     console.log(qry25);
     if (err) {
@@ -599,14 +601,14 @@ app.post("/Bookdata", (req, res) => {
     "','" +
     req.body.user_id +
     "')";
-    console.log("Insert Query: " + qry29);
+  console.log("Insert Query: " + qry29);
   db.query(qry29, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
       let qry31 =
         "select * from tbl_packagebooking p INNER JOIN tbl_package pk on p.package_id=pk.package_id where booking_id=(select max(booking_id) as latest_booking_id from tbl_packagebooking)";
-        console.log("Select Query: " + qry31);
+      console.log("Select Query: " + qry31);
       db.query(qry31, (err, result) => {
         if (err) {
           console.log("Error");
@@ -709,9 +711,9 @@ app.get("/slot/:id", (req, res) => {
     req.params.id;
 
   db.query(qry33, (err, result) => {
-    console.log(qry33);  
+    console.log(qry33);
     if (err) {
-      console.log("Error"); 
+      console.log("Error");
     } else {
       res.send({ slot: result });
     }
@@ -909,7 +911,10 @@ app.post("/Chargeusage", (req, res) => {
 
 app.post("/changeslotstatus/:id/:slid", (req, res) => {
   let qry44 =
-    "update tbl_slotbooking set slot_status=1 where owner_id=" + req.params.id+" and slot_id="+req.params.slid;
+    "update tbl_slotbooking set slot_status=1 where owner_id=" +
+    req.params.id +
+    " and slot_id=" +
+    req.params.slid;
   db.query(qry44, (err, result) => {
     console.log(qry44);
     if (err) {
@@ -921,7 +926,10 @@ app.post("/changeslotstatus/:id/:slid", (req, res) => {
 });
 app.post("/changeslotstatus1/:id/:slid", (req, res) => {
   let qry44 =
-    "update tbl_slotbooking set slot_status=2 where owner_id=" + req.params.id+" and slot_id="+req.params.slid;
+    "update tbl_slotbooking set slot_status=2 where owner_id=" +
+    req.params.id +
+    " and slot_id=" +
+    req.params.slid;
   db.query(qry44, (err, result) => {
     console.log(qry44);
     if (err) {
@@ -933,8 +941,9 @@ app.post("/changeslotstatus1/:id/:slid", (req, res) => {
 });
 app.get("/bookstation/:sid/:uid", (req, res) => {
   let qry47 =
-    "SELECT * FROM tbl_owner o inner join tbl_packagebooking b on b.owner_id=o.owner_id where b.owner_id ="+req.params.uid ;
-    console.log(qry47);
+    "SELECT * FROM tbl_owner o inner join tbl_packagebooking b on b.owner_id=o.owner_id where b.owner_id =" +
+    req.params.uid;
+  console.log(qry47);
   db.query(qry47, (err, result) => {
     if (err) {
       console.log("Error");
@@ -958,71 +967,170 @@ app.get("/Allstationdata", (req, res) => {
     }
   });
 });
-app.post("/Verification/:id",(req,res)=>{
-  let qry50="update tbl_chargingstation set station_status=1 where station_id="+req.params.id
+app.post("/Verification/:id", (req, res) => {
+  let qry50 =
+    "update tbl_chargingstation set station_status=1 where station_id=" +
+    req.params.id;
   db.query(qry50, (err, result) => {
     console.log(qry50);
     if (err) {
       console.log("Error");
     } else {
-      res.send({ message:"Station Verified" });
+      res.send({ message: "Station Verified" });
     }
   });
-})
-app.post("/Complaint",(req,res)=>{
-  let qry51="insert into tbl_complaint(complaint_content,complaint_title,complaint_date,owner_id) values('"+req.body.content+"','"+req.body.title+"',curdate(),'"+req.body.owner_id+"')"
+});
+app.post("/Complaint", (req, res) => {
+  let qry51 =
+    "insert into tbl_complaint(complaint_content,complaint_title,complaint_date,owner_id) values('" +
+    req.body.content +
+    "','" +
+    req.body.title +
+    "',curdate(),'" +
+    req.body.owner_id +
+    "')";
   db.query(qry51, (err, result) => {
     console.log(qry51);
     if (err) {
       console.log("Error");
     } else {
-      res.send({ message:"complaint added" });
+      res.send({ message: "complaint added" });
     }
   });
-})
-app.get("/Complaintdata",(req,res)=>{
-  let qry52="select * from tbl_complaint c inner join tbl_owner o on c.owner_id=o.owner_id "
+});
+app.get("/Complaintdata", (req, res) => {
+  let qry52 =
+    "select * from tbl_complaint c inner join tbl_owner o on c.owner_id=o.owner_id ";
   db.query(qry52, (err, result) => {
-    
     if (err) {
       console.log("Error");
     } else {
-      res.send({ result:result });
+      res.send({ result: result });
     }
   });
-})
-app.post("/ComplaintReply",(req,res)=>{
-  let qry53="update tbl_complaint set complaint_reply='"+req.body.reply+"',complaint_status=1 where complaint_id="+req.body.User_id
+});
+app.post("/ComplaintReply", (req, res) => {
+  let qry53 =
+    "update tbl_complaint set complaint_reply='" +
+    req.body.reply +
+    "',complaint_status=1 where complaint_id=" +
+    req.body.User_id;
   db.query(qry53, (err, result) => {
-  console.log(qry53);
+    console.log(qry53);
     if (err) {
       console.log("Error");
     } else {
-      res.send({ result:"Replayed Scueessfully" });
+      res.send({ result: "Replayed Scueessfully" });
     }
   });
-})
-app.get("/ComplaintUserdata/:id",(req,res)=>{
-  let qry54="select * from tbl_complaint where owner_id="+req.params.id
+});
+app.get("/ComplaintUserdata/:id", (req, res) => {
+  let qry54 = "select * from tbl_complaint where owner_id=" + req.params.id;
   db.query(qry54, (err, result) => {
     console.log(qry54);
-      if (err) {
-        console.log("Error");
-      } else {
-        res.send({ result:result});
-      }
-    });
-
-})
-app.get("/Activeslot/:id",(req,res)=>{
-  let qry55="SELECT COUNT(*) AS total FROM tbl_slotbooking WHERE station_id="+req.params.id+" AND slot_status=1"
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ result: result });
+    }
+  });
+});
+app.get("/Activeslot/:id", (req, res) => {
+  let qry55 =
+    "SELECT COUNT(*) AS total FROM tbl_slotbooking WHERE station_id=" +
+    req.params.id +
+    " AND slot_status=1";
   db.query(qry55, (err, result) => {
     console.log(qry55);
-      if (err) {
-        console.log("Error");
-      } else {
-        res.send({ result:result});
-      }
-    });
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ result: result });
+    }
+  });
+});
+app.post("/Feedback", (req, res) => {
+  let qry56 =
+    "Insert into tbl_feedback(feedback_date,feedback_content,feedback_count,owner_id) values(curdate(),'" +
+    req.body.content +
+    "'," +
+    req.body.count +
+    "," +
+    req.body.owner_id +
+    ")";
+  db.query(qry56, (err, result) => {
+    console.log(qry56);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ message: "Thank You For Your Feedback" });
+    }
+  });
+});
+app.get("/Feedbackdata", (req, res) => {
+  let qry57 =
+    "select * from tbl_feedback f inner join tbl_owner o on f.owner_id=o.owner_id";
+  db.query(qry57, (err, result) => {
+    console.log(qry57);
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ result: result });
+    }
+  });
+});
 
-})
+app.get("/Owners", (req, res) => {
+  let qry57 = "select count(*) as cou from tbl_owner";
+  db.query(qry57, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ count: result[0].cou });
+    }
+  });
+});
+
+app.get("/Stations", (req, res) => {
+  let qry57 = "select count(*) as cou from tbl_chargingstation";
+  db.query(qry57, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ count: result[0].cou });
+    }
+  });
+});
+
+app.get("/Bookings", (req, res) => {
+  let qry57 = "select count(*) as cou from tbl_slotbooking";
+  db.query(qry57, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ count: result[0].cou });
+    }
+  });
+});
+
+app.get("/Energy", (req, res) => {
+  let qry57 = "select sum(slot_usage) as cou from tbl_slotbooking";
+  db.query(qry57, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ count: result[0].cou });
+    }
+  });
+});
+
+app.get("/DayStat", (req, res) => {
+  let qry57 = "SELECT DAYNAME(slot_date) AS day, SUM(slot_usage) AS usageStats FROM  tbl_slotbooking GROUP BY day ORDER BY  FIELD('Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri');";
+  db.query(qry57, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ statics: result});
+    }
+  });
+});

@@ -7,6 +7,8 @@ import { Box } from "@mui/material";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Box1 from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
 import "./style.css";
 const style = {
   position: "absolute",
@@ -25,10 +27,15 @@ const Slots = () => {
   const id = sessionStorage.getItem("uid");
   const [slotdata, setSlotdata] = useState([]);
   const [open, setOpen] = React.useState(false);
-  const [complaint,setComplaint]=useState("")
-  const [Title,setTitle]=useState("")
+  const [open1, setOpen1] = React.useState(false);
+  const [complaint, setComplaint] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [Title, setTitle] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+  const [value, setValue] = React.useState(2);
   const navigate = useNavigate();
   const FetchSlotdata = () => {
     axios
@@ -56,18 +63,34 @@ const Slots = () => {
         FetchSlotdata();
       });
   };
-  const ComplaintData=()=>{
-    const dat={
-      title:Title,
-      content:complaint,
-      owner_id:id,
+  const ComplaintData = () => {
+    const dat = {
+      title: Title,
+      content: complaint,
+      owner_id: id,
+    };
+    axios
+      .post(`http://localhost:4000/Complaint`, dat)
+      .then((response) => response.data)
+      .then((data) => {
+        alert(data.message);
+        handleClose();
+      });
+  };
+  const FeedbackData =()=>{
+    const dat ={
+      count:value,
+      content:feedback,
+      owner_id:id
     }
-    axios.post(`http://localhost:4000/Complaint`,dat).then((response)=>response.data).then((data)=>{
-      alert(data.message);
-     handleClose()
-     
+    axios.post(`http://localhost:4000/Feedback`,dat).then((response) =>response.data).then((data)=>{
+      alert(data.message)
+      handleClose1()
     })
   }
+  const ratingStyle = {
+    fontSize: '2rem', // Increase the size of the rating stars
+  };
   useEffect(() => {
     FetchSlotdata();
   }, []);
@@ -137,11 +160,22 @@ const Slots = () => {
                     className="btn btn-primary"
                     onClick={() => {
                       handleOpen();
+                      console.log(value);
                     }}
                   >
                     Complaint
                   </button>
                 )}
+              </td>
+              <td>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    handleOpen1();
+                  }}
+                >
+                  Feedback
+                </button>
               </td>
             </tr>
           ))}
@@ -157,9 +191,16 @@ const Slots = () => {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <h2>Complaint Box</h2>
             <div>
-            <input type="text" name="Title" onChange={(e) => {
-                setTitle(e.target.value);
-              }} placeholder="Title" className="bor"/></div>
+              <input
+                type="text"
+                name="Title"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                placeholder="Title"
+                className="bor"
+              />
+            </div>
             <textarea
               id="adress"
               name="w3review"
@@ -171,8 +212,66 @@ const Slots = () => {
             ></textarea>
             <div className="finish">
               {" "}
-              <button className="btn btn-primary" onClick={()=>ComplaintData()}>Submit</button>
-              <button className="btn btn-primary" onClick={handleClose}>Close</button>
+              <button
+                className="btn btn-primary"
+                onClick={() => ComplaintData()}
+              >
+                Submit
+              </button>
+              <button className="btn btn-primary" onClick={handleClose}>
+                Close
+              </button>
+            </div>
+          </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} className="modalEdit">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <h2>Feedback</h2>
+            <Box1
+              sx={{
+                "& > legend": { mt: 2 },
+              }}
+            >
+              <Typography component="legend">Rating</Typography>
+              <Rating
+              sx={{ fontSize: '2.5rem' }}
+                name="size-large"
+                value={value}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                }}
+                size="large"
+              />
+            </Box1>
+
+            <textarea
+              id="adress"
+              name="w3review"
+              rows="4"
+              cols="30"
+              placeholder="Describe Your Experience"
+              onChange={(e) => {
+                setFeedback(e.target.value);
+              }}
+            ></textarea>
+            <div className="finish">
+              {" "}
+              <button
+                className="btn btn-primary"
+                onClick={() => FeedbackData()}
+              >
+                Submit
+              </button>
+              <button className="btn btn-primary" onClick={handleClose1}>
+                Close
+              </button>
             </div>
           </Typography>
         </Box>
