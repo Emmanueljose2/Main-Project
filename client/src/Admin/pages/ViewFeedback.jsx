@@ -7,6 +7,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useState } from 'react';
 import axios from 'axios';
+import Box1 from "@mui/material/Box";
+import Rating from "@mui/material/Rating";
+import { Card, CardContent, Typography } from '@mui/material';
 
 export default function ViewFeedback() {
   const [feedback,setfeedback]=useState([])
@@ -24,31 +27,27 @@ axios.get('http://localhost:4000/Feedbackdata').then((response)=>response.data).
   return (
     <div className="title">
     
-      <TableContainer className="complaint_tbl">
-        {feedback.map((row)=>(
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>{row.owner_name}</TableCell>
-              
-            </TableRow>
-          </TableHead>
-          <TableBody>
-           
-              <TableRow
-                key={row.complaint_id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.owner_name}
-                </TableCell>
-                
-              </TableRow>
-           
-          </TableBody>
-          </Table>
-          ))}
-      </TableContainer>
+    {feedback.map((row) => (
+        <Card style={{marginTop: '20px'}}className="complaint_tbl" key={row.owner_name}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              {row.owner_name}
+            </Typography>
+            <Rating
+              sx={{ fontSize: '2.5rem' }}
+              name="size-large"
+              value={row.feedback_count}
+              size="large"
+            />
+            <Typography>
+              {row.station_name}
+            </Typography>
+            <Typography variant="body2" component="p">
+              {row.feedback_content}
+            </Typography>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   )
 }

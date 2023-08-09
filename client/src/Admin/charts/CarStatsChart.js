@@ -17,12 +17,10 @@ const CarStatsChart = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/DayStat")
+      .get("http://localhost:4000/PackStat")
       .then((response) => response.data)
       .then((data) => {
-        setCarStaticsData(
-          []
-        );
+        setCarStaticsData(data.statics);
       });
   }, []);
   return (
@@ -41,13 +39,13 @@ const CarStatsChart = () => {
             <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="name" stroke="#ddd" />
+        <XAxis dataKey="day" stroke="#ddd" />
 
         <CartesianGrid strokeDasharray="0" stroke="#b7ffe913" />
         <Tooltip wrapperClassName="tooltip__style" cursor={false} />
         <Area
           type="monotone"
-          dataKey="prevWeek"
+          dataKey="usageStats"
           stroke="#82ca9d"
           fillOpacity={1}
           fill="url(#colorPv)"

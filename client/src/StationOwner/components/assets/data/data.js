@@ -9,10 +9,7 @@ export const navlist = [
     text: "My Profile",
     path: "/StationOwner/Myprofile",
   },
-  {
-    text: "Logout",
-    path: "/Logout",
-  },
+  
   {
     text:"Packages",
     path: "/StationOwner/Packages"
@@ -24,6 +21,14 @@ export const navlist = [
   {
     text:"Offline bookings",
     path:"/StationOwner/offline"
+  },
+  {
+    text: "Logout",
+    path: "/Logout",
+  },
+  {
+    text:"Station Report",
+    path:"/StationOwner/Report"
   }
   
 ]

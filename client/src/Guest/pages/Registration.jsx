@@ -21,7 +21,6 @@ const Registration = () => {
   const[photo,setPhoto]=useState("")
   const[password,setPassword]=useState("")
   const saveData = (e) => {
-    //console.log(password);
     e.preventDefault();
     const frm = new FormData();
     frm.append("owner_name", name);
@@ -74,7 +73,7 @@ const Registration = () => {
     <Row>
       <Col></Col>
       <Col>
-        <Form className="form1">
+        <Form className="form1" onSubmit={saveData}>
           <div className="font">
             <h5>Vechicle Owner Registration</h5>
           </div>
@@ -87,6 +86,8 @@ const Registration = () => {
               name="name"
               placeholder="First Name"
               type="text"
+              required
+              pattern="[A-Za-z ]{3,}"
               onChange={(e) => {
                 setName(e.target.value);
               }}
@@ -98,7 +99,8 @@ const Registration = () => {
             <Label for="phone" className="style">
               Contact
             </Label>
-            <Input id="phone" name="phone" placeholder="Phone" type="phone"
+            <Input id="phone" name="phone" required
+              pattern="[+0-9]{10,13}" placeholder="Phone" type="phone"
             onChange={(e) => {
               setContact(e.target.value);
             }} />
@@ -209,7 +211,7 @@ const Registration = () => {
           
           
           <FormGroup className=" button1">
-            <button onClick={saveData}>Submit</button>
+            <button type="submit">Submit</button>
           </FormGroup>
         </Form>
       </Col>

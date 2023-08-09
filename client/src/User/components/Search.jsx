@@ -2,18 +2,13 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./style.css";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import ItemData from "./Item";
 
 export default function Search() {
-  const [district, setDistrict] = useState("");
   const [districtData, setDistrictData] = useState([]);
   const [placeData, setPlaceData] = useState([]);
   const [location, setLocationData] = useState([]);
   const [stationData, setStationData] = useState([]);
-  const [locationData, Location] = useState([]);
-  console.log(localStorage.getItem('sessionId'));
   const getData = () => {
     axios
       .get("http://localhost:4000/district")
@@ -49,10 +44,6 @@ export default function Search() {
         
       });
   };
-  // const Activeslot =()=>{
-  //   axios.get(`http://localhost:4000/Activeslot/${e}`)
-  // }
-
   useEffect(() => {
     getData();
   }, []);
@@ -61,7 +52,8 @@ export default function Search() {
     <div>
       <div className="search-main">
         <table>
-          <tr>
+         <tbody>
+         <tr>
             <td style={{ padding: "20px" }}>
               <div>
                 <label>District</label>
@@ -134,27 +126,12 @@ export default function Search() {
                 </select>
               </div>
             </td>
-            <div>
-              {/* <button class="btn style2" onChange={() => {
-           // getStation();
-          }}>Search</button> */}
-            </div>
           </tr>
+         </tbody>
         </table>
       </div>
       <div className="cad1">
-        {stationData.map((d, key) => (
-          <Card style={{ width: "18rem" }}>
-            <Card.Img variant="top" src={d.station_photo} />
-            <Card.Body>
-              <Card.Title>{d.station_name}</Card.Title>
-              <Link to={`./Stations/${d.station_id}`}>
-                <Button variant="primary">View more</Button>
-                {localStorage.setItem('sessionId', d.station_id)}
-              </Link>
-            </Card.Body>
-          </Card>
-        ))}
+        {stationData.map((d, key) =>(<ItemData data={d} key={key}/>))}
       </div>
     </div>
   );

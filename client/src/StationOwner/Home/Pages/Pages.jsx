@@ -7,6 +7,8 @@
   import Packages from '../../components/Packages';
   import Slot from '../../components/Slot';
   import Offline from '../../components/offline';
+  import Report from '../../components/Report';
+  import PackageReport from '../../components/PackageReport';
   export const Pages = () => {
     return (
       <>
@@ -19,6 +21,8 @@
         <Route path="/Packages" element={<Packages/>}/>
         <Route path="/slots" element={<Slot/>}/>
         <Route path="/offline" element={<Offline/>}/>
+        <Route path="/Report" element={<Report/>}/>
+        <Route path="/PackageReport" element={<PackageReport/>}/>
     
       </Routes>
         <Footer/>

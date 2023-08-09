@@ -31,11 +31,15 @@ const Slots = () => {
   const [complaint, setComplaint] = useState("");
   const [feedback, setFeedback] = useState("");
   const [Title, setTitle] = useState("");
+  const [station,setStation]=useState("")
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleOpen1 = () => setOpen1(true);
+  const handleOpen1 = (e) =>{
+    setStation(e)
+    setOpen1(true);
+  } 
   const handleClose1 = () => setOpen1(false);
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
   const FetchSlotdata = () => {
     axios
@@ -68,6 +72,7 @@ const Slots = () => {
       title: Title,
       content: complaint,
       owner_id: id,
+      station_id:station
     };
     axios
       .post(`http://localhost:4000/Complaint`, dat)
@@ -81,7 +86,9 @@ const Slots = () => {
     const dat ={
       count:value,
       content:feedback,
-      owner_id:id
+      owner_id:id,
+      station_id:station
+
     }
     axios.post(`http://localhost:4000/Feedback`,dat).then((response) =>response.data).then((data)=>{
       alert(data.message)
@@ -160,7 +167,6 @@ const Slots = () => {
                     className="btn btn-primary"
                     onClick={() => {
                       handleOpen();
-                      console.log(value);
                     }}
                   >
                     Complaint
@@ -171,7 +177,7 @@ const Slots = () => {
                 <button
                   className="btn btn-primary"
                   onClick={() => {
-                    handleOpen1();
+                    handleOpen1(d.station_id);
                   }}
                 >
                   Feedback

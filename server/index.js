@@ -1051,12 +1051,14 @@ app.get("/Activeslot/:id", (req, res) => {
 });
 app.post("/Feedback", (req, res) => {
   let qry56 =
-    "Insert into tbl_feedback(feedback_date,feedback_content,feedback_count,owner_id) values(curdate(),'" +
+    "Insert into tbl_feedback(feedback_date,feedback_content,feedback_count,owner_id,station_id) values(curdate(),'" +
     req.body.content +
     "'," +
     req.body.count +
     "," +
     req.body.owner_id +
+    "," +
+    req.body.station_id +
     ")";
   db.query(qry56, (err, result) => {
     console.log(qry56);
@@ -1069,7 +1071,7 @@ app.post("/Feedback", (req, res) => {
 });
 app.get("/Feedbackdata", (req, res) => {
   let qry57 =
-    "select * from tbl_feedback f inner join tbl_owner o on f.owner_id=o.owner_id";
+    "select * from tbl_feedback f inner join tbl_owner o on f.owner_id=o.owner_id inner join tbl_chargingstation c on c.station_id=f.station_id";
   db.query(qry57, (err, result) => {
     console.log(qry57);
     if (err) {
@@ -1125,12 +1127,64 @@ app.get("/Energy", (req, res) => {
 });
 
 app.get("/DayStat", (req, res) => {
-  let qry57 = "SELECT DAYNAME(slot_date) AS day, SUM(slot_usage) AS usageStats FROM  tbl_slotbooking GROUP BY day ORDER BY  FIELD('Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri');";
+  let qry57 =
+    "SELECT DAYNAME(slot_date) AS day, SUM(slot_usage) AS usageStats FROM  tbl_slotbooking GROUP BY day ORDER BY  FIELD('Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri');";
   db.query(qry57, (err, result) => {
     if (err) {
       console.log("Error");
     } else {
-      res.send({ statics: result});
+      res.send({ statics: result });
+    }
+  });
+});
+app.get("/ReviewData/:id",(req,res)=>{
+  let qry58="select AVG(feedback_count) as count from tbl_feedback  where station_id="+req.params.id
+ console.log(qry58);
+  db.query(qry58, (err, result) => {
+   
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ review: result[0].count });
+    }
+  });
+})
+app.get("/StationSlotReport/:id/:from/:to",(req,res)=>{
+  console.log(req.params.from);
+  let qry59="select * from tbl_slotbooking s inner join tbl_owner o on s.owner_id=o.owner_id inner join tbl_package p on s.package_id=p.package_id where s.station_id="+req.params.id+" AND s.slot_date BETWEEN '"+req.params.from+"' AND '"+req.params.to+"'"
+  console.log(qry59);
+  db.query(qry59, (err, result) => {
+   
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ review: result });
+    }
+  });
+  
+})
+app.get("/StationPackageReport/:id/:from/:to",(req,res)=>{
+  let qry60="select * from tbl_packagebooking b  inner join tbl_package p on b.package_id=p.package_id inner join tbl_owner o on o.owner_id=b.owner_id where p.station_id="+req.params.id+" AND b.booking_date BETWEEN '"+req.params.from+"' AND '"+req.params.to+"'";
+  db.query(qry60, (err, result) => {
+   
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ review: result });
+    }
+  });
+})
+
+
+
+app.get("/PackStat", (req, res) => {
+  let qry57 =
+    "SELECT DAYNAME(booking_date) AS day, COUNT(*) AS usageStats FROM  tbl_packagebooking GROUP BY day ORDER BY  FIELD('Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri');";
+  db.query(qry57, (err, result) => {
+    if (err) {
+      console.log("Error");
+    } else {
+      res.send({ statics: result });
     }
   });
 });
