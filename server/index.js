@@ -622,7 +622,7 @@ app.post("/Bookdata", (req, res) => {
 app.get("/PackageDetails/:id", (req, res) => {
   console.log("hello");
   let qry30 =
-    "select * from tbl_package p inner join tbl_packagebooking b on p.package_id=b.package_id inner join tbl_chargingstation s on p.station_id=s.station_id where owner_id=" +
+    "select * from tbl_package p inner join tbl_packagebooking b on p.package_id=b.package_id inner join tbl_chargingstation s on p.station_id=s.station_id inner join tbl_owner o on o.owner_id=b.owner_id where o.owner_id=" +
     req.params.id;
   db.query(qry30, (err, result) => {
     console.log(qry30);

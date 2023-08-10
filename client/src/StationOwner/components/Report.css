@@ -17,3 +17,8 @@ display: flex;
 justify-content: space-around;
 padding: 37px;
 }
+.Reportcontroller{
+    padding: 84px;
+    display: flex;
+    justify-content: space-around;
+}

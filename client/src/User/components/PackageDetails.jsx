@@ -30,7 +30,7 @@ export default function PackageDetails() {
 
           <th>About</th>
 
-          <th>Number of times</th>
+          <th>Available Balance</th>
           <th>Slot Booking</th>
         </tr>
         
@@ -42,7 +42,7 @@ export default function PackageDetails() {
               <td>{d.station_name}</td>
               
               <td>{d.package_details}</td>
-              <td>{d.package_duration}</td>
+              <td>{d.owner_balance}</td>
               <Link to={`../slotbooking/${d.station_id}/${d.package_id}`}>
               <td><button className="btn btn-primary" >Slot</button></td>
               </Link>

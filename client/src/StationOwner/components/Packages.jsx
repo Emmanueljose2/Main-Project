@@ -28,7 +28,7 @@ export default function Packages() {
             <th>User</th>
             <th>Status</th>
             <th>About</th>
-            <th>Number of times</th>
+            <th>Available Balance(KWH)</th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@ export default function Packages() {
                 <td>{d.owner_name}</td>
                 <td>{d.booking_status}</td>
                 <td>{d.package_details}</td>
-                <td>{d.package_duration}</td>
+                <td>{d.owner_balance}</td>
               </tr>
     
           ))}
